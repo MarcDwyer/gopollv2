@@ -1,0 +1,8 @@
+✔ Set up backend @started(20-02-01 15:10) @done(20-02-01 16:10) @lasted(1h39s)
+☐ Set up Websocket Server @started(20-02-01 16:11)
+  Using WebSocket package: https://github.com/websockets/ws
+☐ Create a hub with rooms @started(20-02-01 16:12)
+    Hub should have rooms in order to send data specific to what the client is viewing
+    It would be best to use https://github.com/gorilla/websocket design principles for creating a hub but in JavaScript
+
+  
