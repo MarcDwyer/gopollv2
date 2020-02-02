@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/uuid": "^3.4.7",
     "@types/ws": "^7.2.1",
     "express": "^4.17.1",
     "typescript": "^3.7.5",
+    "uuid": "^3.4.0",
     "ws": "^7.2.1"
   }
 }
