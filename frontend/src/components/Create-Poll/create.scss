@@ -1,0 +1,17 @@
+.create-header {
+  font-size: 27px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    margin: 5px auto 5px auto;
+    padding: 10px 10px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+}

@@ -1,0 +1,26 @@
+.navbar {
+  display: flex;
+  width: 100%;
+  background-color: #ffd756;
+
+  .inner-nav {
+    display: flex;
+    margin: auto 10px auto 10px;
+    width: 100%;
+
+    .logo {
+      font-size: 37px;
+    }
+    .about-link {
+      font-size: 32px;
+      margin: auto 10px auto auto;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+
+      span {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
