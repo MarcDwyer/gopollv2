@@ -6,13 +6,14 @@
     ✔ Create a Rooms @started(20-02-01 16:12) @done(20-02-02 22:01) @lasted(1d5h49m31s)
         Hub should have rooms in order to send data specific to what the client is viewing
     ✔ Hook up to Redis @started(20-02-03 01:12) @done(20-02-03 01:12) @lasted(35s)
-    ☐ Set up subscriptions to keys using Redis and pipe them to client @started(20-02-03 01:13)
+    ☐ Set up subscriptions to keys using Redis and pipe the updates to the client @started(20-02-03 01:13)
       Read https://github.com/NodeRedis/node_redis to get this to work
+
 ☐ Complete Frontend @started(20-02-02 20:49)
     ✔ Make homepage on frontend @started(20-02-01 16:48) @done(20-02-02 22:01) @lasted(1d5h13m58s)
     ☐ Make CreatePoll Component @started(20-02-02 20:31)
         PollOptions should render a new input if last Polloption has been filled. Use useEffect to achieve this.
-        ☐ Implement some error handling for question component
+        ☐ Implement some error handling for the question
 
 ☐ Complete Redis DB @started(20-02-02 22:47)
 Redis is being used in order to achieve horizontal scalability and quick changes to polls

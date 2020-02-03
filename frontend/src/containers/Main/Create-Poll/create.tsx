@@ -4,9 +4,11 @@ import {
   InnerCard,
   PollInput,
   MyButton
-} from "../../styled-components/styles";
+} from "../../../styled-components/styles";
 
 import "./create.scss";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "../../../reducers/reducers";
 
 type PollOptions = {
   value: string;
@@ -28,6 +30,8 @@ const CreatePoll = () => {
     error: false
   });
   const [options, setOptions] = useState<PollOptions[]>([]);
+
+  const socket = useSelector((state: ReduxStore) => state.socket);
 
   useEffect(() => {
     setOptions(getOptions(3, "input"));
@@ -66,6 +70,7 @@ const CreatePoll = () => {
           label="Question"
           type={question.type}
           required
+          helperText="Must have a question"
           error={question.error}
           onChange={e => {
             e.persist();

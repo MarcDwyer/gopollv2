@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import CreatePoll from "../../components/Create-Poll/create";
+import CreatePoll from "./Create-Poll/create";
 import Nav from "../../components/Nav/nav";
 
 import "./main.scss";
+import { setSocket } from "../../actions/socket_actions";
 
 const Main = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setSocket(`ws://localhost:5000`));
+  }, []);
   return (
     <div className="main">
       <Nav />

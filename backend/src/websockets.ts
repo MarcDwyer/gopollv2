@@ -1,5 +1,6 @@
 import WebSocket from "ws";
 import Room from "./rooms";
+import { RedisClient } from "redis";
 
 export const getWsServer = () => {
   return new WebSocket.Server({
@@ -25,11 +26,21 @@ export const getWsServer = () => {
   });
 };
 
-export const setWs = (wss: WebSocket.Server, rooms: Room) => {
+export const setWs = (
+  wss: WebSocket.Server,
+  rooms: Room,
+  client: RedisClient
+) => {
   wss.on("connection", ws => {
     ws.send("You just connected");
-    ws.on("message", (msg: any) => {
+    ws.on("message", (data: any) => {
+      const msg = JSON.parse(data);
       console.log(msg);
+      if (!msg.type) return;
+      switch (msg.type) {
+        default:
+          console.log("banana");
+      }
     });
   });
 };
