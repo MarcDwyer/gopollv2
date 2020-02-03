@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import Hub from "./hub";
+import Room from "./rooms";
 
 export const getWsServer = () => {
   return new WebSocket.Server({
@@ -25,7 +25,7 @@ export const getWsServer = () => {
   });
 };
 
-export const setWs = (wss: WebSocket.Server, hub: Hub) => {
+export const setWs = (wss: WebSocket.Server, rooms: Room) => {
   wss.on("connection", ws => {
     ws.send("You just connected");
     ws.on("message", (msg: any) => {

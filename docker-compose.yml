@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  redis:
+    build: myredisdb
+    ports:
+      - "4200:4200"
+    container_name: myredisdb
+    restart: always
