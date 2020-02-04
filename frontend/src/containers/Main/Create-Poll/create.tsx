@@ -44,7 +44,6 @@ const CreatePoll = () => {
           }}
         >
           {({ values, touched, errors }) => {
-            console.log(values);
             return (
               <Form style={{ display: "flex", flexDirection: "column" }}>
                 <div className="question">
