@@ -3,10 +3,11 @@
     ✔ Set up Websocket Server @started(20-02-01 16:47) @done(20-02-01 16:47) @lasted(29s)
         Using WebSocket package: https://github.com/websockets/ws
         It would be best to use https://github.com/gorilla/websocket design principles for creating a hub but in JavaScript
+        Might use socketIO in order to use https://github.com/socketio/socket.io-redis for less abstraction
     ✔ Create a Rooms @started(20-02-01 16:12) @done(20-02-02 22:01) @lasted(1d5h49m31s)
         Hub should have rooms in order to send data specific to what the client is viewing
     ✔ Hook up to Redis @started(20-02-03 01:12) @done(20-02-03 01:12) @lasted(35s)
-    ☐ Set up subscriptions to keys using Redis and pipe the updates to the client @started(20-02-03 01:13)
+    ✘ Set up subscriptions to keys using Redis and pipe the updates to the client @started(20-02-03 01:13) @cancelled(20-02-03 22:01) @wasted(20h48m15s)
       Read https://github.com/NodeRedis/node_redis to get this to work
 
 ☐ Complete Frontend @started(20-02-02 20:49)

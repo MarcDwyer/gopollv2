@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import CreatePoll from "./Create-Poll/create";
-import Nav from "../../components/Nav/nav";
+import CreatePoll from "../Create-Poll/create";
+import Nav from "../../../components/Nav/nav";
 
 import "./main.scss";
-import { setSocket } from "../../actions/socket_actions";
+import { setSocket } from "../../../actions/socket_actions";
 
 const Main = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setSocket(`ws://localhost:5000`));
+    dispatch(setSocket());
   }, []);
   return (
     <div className="main">

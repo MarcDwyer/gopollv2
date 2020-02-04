@@ -1,11 +1,8 @@
+import io from "socket.io-client";
 import { SET_SOCKET } from "../reducers/socket_reducer";
 
-export const setSocket = (url: string) => {
-  const socket = new WebSocket(url);
-  socket.addEventListener("message", msg => {
-    console.log(msg.data);
-    socket.send("yeah thanks bro");
-  });
+export const setSocket = () => {
+  const socket = io("http://localhost:5000");
   return {
     type: SET_SOCKET,
     payload: socket

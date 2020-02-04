@@ -8,3 +8,12 @@
   width: 90%;
   margin: auto;
 }
+
+.question {
+  display: flex;
+  width: 95%;
+  margin: auto auto 20px auto;
+  div {
+    width: 100%;
+  }
+}

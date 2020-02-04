@@ -5,98 +5,86 @@ import {
   PollInput,
   MyButton
 } from "../../../styled-components/styles";
-
-import "./create.scss";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../reducers/reducers";
+import { Formik, Form, Field } from "formik";
 
-type PollOptions = {
-  value: string;
-  type: string;
-  error: boolean;
+import "./create.scss";
+
+type TPollInput = {
+  [key: string]: string;
 };
-const getOptions = (count: number, type: string) => {
-  const options: PollOptions[] = [];
+const getOptions = (count: number) => {
+  const options: TPollInput = {};
   for (let x = 0; x < count; x++) {
-    const option: PollOptions = { value: "", type, error: false };
-    options.push(option);
+    options[`option-${x + 1}`] = "";
   }
   return options;
 };
 const CreatePoll = () => {
-  const [question, setQuest] = useState<PollOptions>({
-    type: "input",
-    value: "",
-    error: false
-  });
-  const [options, setOptions] = useState<PollOptions[]>([]);
+  const [options, setOptions] = useState<TPollInput>({});
+  const [renderCount, setRender] = useState<number>(0);
 
   const socket = useSelector((state: ReduxStore) => state.socket);
-
   useEffect(() => {
-    setOptions(getOptions(3, "input"));
+    setOptions({ ...options, ...getOptions(3) });
   }, []);
-
-  useEffect(() => {
-    const len = options.length;
-    if (len) {
-      if (options[len - 1].value.length && len <= 9) {
-        const newOption = { type: "text", value: "", error: false };
-        setOptions(prevState => [...prevState, newOption]);
-      }
-    }
-  }, [options]);
-  const handleInputChange = (value: string, index: number) => {
-    setOptions(prevState => {
-      const copy = [...prevState];
-      if (copy[index]) copy[index].value = value;
-      return copy;
-    });
-  };
-
-  const handleSubmit = () => {
-    if (!question.value.length) return;
-    const filterOptions = options.filter(o => o.value.length);
-    console.log(filterOptions);
-  };
-
   return (
     <Card>
       <InnerCard width="550px">
         <span className="create-header">Create a poll!</span>
-        <PollInput
-          placeholder="Enter a question"
-          value={question.value}
-          label="Question"
-          type={question.type}
-          required
-          helperText="Must have a question"
-          error={question.error}
-          onChange={e => {
-            e.persist();
-            setQuest(p => {
-              const q = { ...p };
-              q.value = e.target.value;
-              return q;
-            });
+        <Formik
+          enableReinitialize={true}
+          initialValues={{
+            question: "",
+            ...options
           }}
-        />
-        <div className="options">
-          {options.map(({ value, type, error }, i) => {
+          onSubmit={values => {
+            console.log(values);
+          }}
+        >
+          {({ values, touched, errors }) => {
+            console.log(values);
             return (
-              <PollInput
-                label={`Option ${i + 1}`}
-                key={i}
-                value={value}
-                variant="outlined"
-                type={type}
-                error={error}
-                onChange={e => handleInputChange(e.target.value, i)}
-              />
+              <Form style={{ display: "flex", flexDirection: "column" }}>
+                <div className="question">
+                  <Field
+                    label="Question"
+                    required
+                    name="question"
+                    component={PollInput}
+                  />
+                </div>
+                <div className="options">
+                  {Object.keys(options).map(k => {
+                    return (
+                      <Field
+                        key={k}
+                        label={k}
+                        name={k}
+                        variant="outlined"
+                        component={PollInput}
+                        onChange={() => {
+                          const keys = Object.keys(options);
+                          if (k === keys[keys.length - 1] && renderCount <= 6) {
+                            setOptions({
+                              ...options,
+                              [`option-${keys.length + 1}`]: ""
+                            });
+                            setRender(renderCount + 1);
+                          }
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                <MyButton type="submit" onClick={() => {}}>
+                  Submit
+                </MyButton>
+              </Form>
             );
-          })}
-        </div>
-        <MyButton onClick={handleSubmit}>Submit</MyButton>
+          }}
+        </Formik>
       </InnerCard>
     </Card>
   );

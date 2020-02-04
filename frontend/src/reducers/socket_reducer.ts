@@ -1,6 +1,6 @@
 import { Action } from "./reducers";
 
-export type SocketState = null | WebSocket;
+export type SocketState = null | SocketIOClient.Socket;
 
 export const SET_SOCKET = Symbol();
 
