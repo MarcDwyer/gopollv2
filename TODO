@@ -13,6 +13,7 @@
         Must read more about redis sub/pub, not really understanding how it would work with my websockets 
         This is incredibly valuable to understand, in order to create a game in browser, I must know this
         https://socket.io/docs/using-multiple-nodes/
+        ☐ Handle different message types @started(20-02-04 21:23)
 
 ☐ Complete Frontend @started(20-02-02 20:49)
     ✔ Make homepage on frontend @started(20-02-01 16:48) @done(20-02-02 22:01) @lasted(1d5h13m58s)

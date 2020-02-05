@@ -1,6 +1,6 @@
 import redis from "redis";
-import ws from "socket.io";
-import { setPollCreator } from "./sockethandler";
+import WebSocketHandler, { getWsServer } from "./websockets";
+import { promisify } from "util";
 
 // const dburl = `mongodb://${DBUSER}:${DBPASS}@${
 //   ISDEV ? "localhost" : "mongodb"
@@ -11,10 +11,11 @@ export const RedisConfig = {
   password: "ihmc_sucks"
 };
 async function main() {
-  const io = ws(5000);
+  const wss = getWsServer();
   const client = redis.createClient(RedisConfig);
   client.select(0);
-  setPollCreator(io, client);
+  const wsHandler = new WebSocketHandler(wss, client);
+  wsHandler.setHandlers();
 }
 
 main();

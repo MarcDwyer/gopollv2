@@ -7,7 +7,6 @@ import {
 } from "../../../styled-components/styles";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../reducers/reducers";
-import { Formik, Form, Field } from "formik";
 
 import "./create.scss";
 
@@ -21,69 +20,86 @@ const getOptions = (count: number) => {
   }
   return options;
 };
-const CreatePoll = () => {
-  const [options, setOptions] = useState<TPollInput>({});
-  const [renderCount, setRender] = useState<number>(0);
 
+function deleteNoLengthKeys(obj: { [key: string]: string }) {
+  const newObj = { ...obj };
+  for (const k in newObj) {
+    if (!newObj[k].length) {
+      delete newObj[k];
+    }
+  }
+  return newObj;
+}
+const CreatePoll = () => {
+  const [poll, setPoll] = useState<{ [key: string]: string }>({
+    question: ""
+  });
   const socket = useSelector((state: ReduxStore) => state.socket);
+
   useEffect(() => {
-    setOptions({ ...options, ...getOptions(3) });
+    setPoll({ ...poll, ...getOptions(3) });
   }, []);
+  useEffect(() => {
+    const keys = Object.keys(poll);
+    //@ts-ignore
+    if (poll[keys[keys.length - 1]].length > 1 && keys.length <= 10) {
+      setPoll({ ...poll, ...{ [`option-${keys.length}`]: "" } });
+    }
+  }, [poll]);
+
+  const handleChange = (key: string, value: string) => {
+    setPoll(prev => {
+      const copy = { ...prev };
+      //@ts-ignore
+      copy[key] = value;
+      return copy;
+    });
+  };
   return (
     <Card>
       <InnerCard width="550px">
         <span className="create-header">Create a poll!</span>
-        <Formik
-          enableReinitialize={true}
-          initialValues={{
-            question: "",
-            ...options
-          }}
-          onSubmit={values => {
-            console.log(values);
+        <form
+          style={{ display: "flex", flexDirection: "column" }}
+          onSubmit={e => {
+            e.preventDefault();
+            const packagedPoll = deleteNoLengthKeys(poll);
+            const payload = {
+              type: "create-poll",
+              pollData: packagedPoll
+            };
+            socket?.send(JSON.stringify(payload));
           }}
         >
-          {({ values, touched, errors }) => {
-            return (
-              <Form style={{ display: "flex", flexDirection: "column" }}>
-                <div className="question">
-                  <Field
-                    label="Question"
-                    required
-                    name="question"
-                    component={PollInput}
+          <div className="question">
+            <PollInput
+              label="Question"
+              required
+              name="question"
+              autoComplete="off"
+              value={poll.question}
+              onChange={e => handleChange("question", e.target.value)}
+            />
+          </div>
+          <div className="options">
+            {Object.entries(poll)
+              .filter(([k]) => k !== "question")
+              .map(([k, v]) => {
+                return (
+                  <PollInput
+                    key={k}
+                    autoComplete="off"
+                    label={k}
+                    name={k}
+                    onChange={e => handleChange(k, e.target.value)}
+                    variant="outlined"
+                    value={v}
                   />
-                </div>
-                <div className="options">
-                  {Object.keys(options).map(k => {
-                    return (
-                      <Field
-                        key={k}
-                        label={k}
-                        name={k}
-                        variant="outlined"
-                        component={PollInput}
-                        onChange={() => {
-                          const keys = Object.keys(options);
-                          if (k === keys[keys.length - 1] && renderCount <= 6) {
-                            setOptions({
-                              ...options,
-                              [`option-${keys.length + 1}`]: ""
-                            });
-                            setRender(renderCount + 1);
-                          }
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-                <MyButton type="submit" onClick={() => {}}>
-                  Submit
-                </MyButton>
-              </Form>
-            );
-          }}
-        </Formik>
+                );
+              })}
+          </div>
+          <MyButton type="submit">Submit</MyButton>
+        </form>
       </InnerCard>
     </Card>
   );
