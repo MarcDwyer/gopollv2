@@ -9,17 +9,23 @@ import Nav from "../../../components/Nav/nav";
 import { setSocket } from "../../../actions/socket_actions";
 import { Action } from "../../../reducers/reducers";
 
+import { FPOLL_DATA } from "../../../types/message_types";
+import { history } from "../../../index";
 import "./main.scss";
 
 const handleSocketMsgs = (ws: WebSocket, dispatch: Dispatch<Action>) => {
   ws.addEventListener("message", evt => {
-    const parsed = JSON.parse(evt.data);
-    console.log(parsed);
+    const data = JSON.parse(evt.data);
+    switch (data.type) {
+      case FPOLL_DATA:
+        console.log(data);
+    }
   });
 };
 
 const Main = () => {
   const dispatch = useDispatch();
+  console.log(history);
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:5000");
     handleSocketMsgs(ws, dispatch);

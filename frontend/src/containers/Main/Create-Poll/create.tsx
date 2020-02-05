@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../reducers/reducers";
 
 import "./create.scss";
+import { FCREATE_POLL } from "../../../types/message_types";
 
 type TPollInput = {
   [key: string]: string;
@@ -65,7 +66,7 @@ const CreatePoll = () => {
             e.preventDefault();
             const packagedPoll = deleteNoLengthKeys(poll);
             const payload = {
-              type: "create-poll",
+              type: FCREATE_POLL,
               pollData: packagedPoll
             };
             socket?.send(JSON.stringify(payload));
