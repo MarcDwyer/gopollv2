@@ -1,12 +1,17 @@
 export type Poll = {
-  [key: string]: string;
+  options: { [key: string]: Option };
   question: string;
 };
 
-export type PollPayload = {
+type Option = {
+  value: string;
+  count: number;
+};
+export type PollData = {
   id: string;
-  pollData: Poll;
-  type: string;
+  question: string;
+  options: { [key: string]: Option };
+  type?: string;
 };
 
 export type PollIDPayload = {

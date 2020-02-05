@@ -17,7 +17,7 @@ type TPollInput = {
 const getOptions = (count: number) => {
   const options: TPollInput = {};
   for (let x = 0; x < count; x++) {
-    options[`option-${x + 1}`] = "";
+    options[`option${x + 1}`] = "";
   }
   return options;
 };
@@ -43,7 +43,7 @@ const CreatePoll = () => {
   useEffect(() => {
     const keys = Object.keys(poll);
     if (poll[keys[keys.length - 1]].length > 1 && keys.length <= 10) {
-      setPoll({ ...poll, ...{ [`option-${keys.length}`]: "" } });
+      setPoll({ ...poll, ...{ [`option${keys.length}`]: "" } });
     }
   }, [poll]);
 

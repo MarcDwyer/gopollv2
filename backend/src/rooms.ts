@@ -28,4 +28,4 @@ class Rooms {
   }
 }
 
-export default new Rooms();
+export default Rooms;
