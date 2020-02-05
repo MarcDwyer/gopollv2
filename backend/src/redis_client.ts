@@ -1,4 +1,4 @@
-import { RedisClient, createClient } from "redis";
+import { RedisClient } from "redis";
 import { promisify } from "util";
 
 export type ClientPromises = {
@@ -12,5 +12,3 @@ export const clientPromises = (client: RedisClient): ClientPromises => {
     setAsync: promisify(client.set).bind(client)
   };
 };
-
-export default createClient(RedisConfig);

@@ -1,5 +1,4 @@
 import { Server } from "ws";
-import Rooms from "./rooms";
 import { setWsHandlers } from "./ws_handler";
 import { createClient } from "redis";
 
