@@ -2,8 +2,13 @@ import { Server } from "ws";
 import uuid = require("uuid");
 import WebSocket from "ws";
 import { ClientPromises } from "./client_methods";
-import { Poll, PollPayload } from "./types/poll_types";
-import { POLL_DATA, CREATE_POLL, GET_POLL } from "./types/message_types";
+import { Poll, PollPayload, PollIDPayload } from "./types/poll_types";
+import {
+  POLL_DATA,
+  CREATE_POLL,
+  GET_POLL,
+  POLL_ID
+} from "./types/message_cases";
 import Rooms from "./rooms";
 
 export interface MySocket extends WebSocket {
@@ -22,9 +27,9 @@ export const setHandlers = (
       console.log(data);
       switch (data.type) {
         case CREATE_POLL:
-          const newPoll = await createPoll(data.pollData, setAsync);
-          if (!newPoll) return;
-          socket.send(JSON.stringify(newPoll));
+          const pollID = await createPoll(data.pollData, setAsync);
+          if (!pollID) return;
+          socket.send(JSON.stringify(pollID));
         case GET_POLL:
           const poll = getPoll(data.id, getAsync);
           socket.send(JSON.stringify(poll));
@@ -36,7 +41,7 @@ export const setHandlers = (
 const createPoll = async (
   poll: Poll,
   setAsync: Function
-): Promise<PollPayload | null> => {
+): Promise<PollIDPayload | null> => {
   try {
     const id = uuid();
     const newPoll = {
@@ -45,8 +50,8 @@ const createPoll = async (
     };
     await setAsync(id, JSON.stringify(newPoll));
     return {
-      type: POLL_DATA,
-      ...newPoll
+      type: POLL_ID,
+      id
     };
   } catch (err) {
     console.log(err);

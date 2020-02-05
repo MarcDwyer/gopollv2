@@ -42,7 +42,6 @@ const CreatePoll = () => {
   }, []);
   useEffect(() => {
     const keys = Object.keys(poll);
-    //@ts-ignore
     if (poll[keys[keys.length - 1]].length > 1 && keys.length <= 10) {
       setPoll({ ...poll, ...{ [`option-${keys.length}`]: "" } });
     }
