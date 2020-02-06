@@ -1,36 +1,42 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
+import { useHistory } from "react-router-dom";
+import io from "socket.io-client";
+
+import { setSocket } from "../../../actions/socket_actions";
 
 import CreatePoll from "../Create-Poll/create";
 import Nav from "../../../components/Nav/nav";
 
-import { setSocket } from "../../../actions/socket_actions";
-import { useHistory } from "react-router-dom";
+import { FPoll, FPollData } from "../../../types/poll_types";
 import { FPOLL_DATA, FPOLL_ID } from "../../../types/message_types";
 
 import PollViewer from "../Poll-Viewer/poll-viewer";
 
 import "./main.scss";
+import { setPoll } from "../../../actions/poll_actions";
 
 const Main = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:5000");
-    handleSocketMsgs(ws);
+    const ws = io("http://localhost:5000");
+    socketHandler(ws);
     dispatch(setSocket(ws));
   }, []);
 
-  const handleSocketMsgs = (ws: WebSocket) => {
-    ws.addEventListener("message", evt => {
-      const data = JSON.parse(evt.data);
-      switch (data.type) {
-        case FPOLL_DATA:
-        case FPOLL_ID:
-          history.push(`/vote/${data.id}`);
+  const socketHandler = (wss: SocketIOClient.Socket) => {
+    wss.on(FPOLL_ID, (id: any) => {
+      history.push(`/vote/${id}`);
+    });
+    wss.on(FPOLL_DATA, (poll: FPollData) => {
+      if (!poll) {
+        console.log("poll not found");
+        return;
       }
+      dispatch(setPoll(poll));
     });
   };
   console.log("main rendered");

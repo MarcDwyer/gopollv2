@@ -1,5 +1,5 @@
 export const FASSIGN_ID = "assignid",
-  FPOLL_DATA = "poll_data",
+  FPOLL_DATA = "polldata",
   FCREATE_POLL = "createpoll",
   FGET_POLL = "getpoll",
-  FPOLL_ID = "poll-id";
+  FPOLL_ID = "pollid";

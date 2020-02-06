@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+import PollReducer, { PollState } from "./poll_reducer";
 import SocketReducer, { SocketState } from "./socket_reducer";
 
 export type Action = {
@@ -8,7 +9,9 @@ export type Action = {
 };
 export type ReduxStore = {
   socket: SocketState;
+  poll: PollState;
 };
 export default combineReducers({
-  socket: SocketReducer
+  socket: SocketReducer,
+  poll: PollReducer
 });

@@ -1,25 +1,7 @@
-import { Server } from "ws";
 import { setWsHandlers } from "./ws_handler";
 import { createClient } from "redis";
+import io from "socket.io";
 
-const wss = new Server({
-  port: 5000,
-  perMessageDeflate: {
-    zlibDeflateOptions: {
-      chunkSize: 1024,
-      memLevel: 7,
-      level: 3
-    },
-    zlibInflateOptions: {
-      chunkSize: 10 * 1024
-    },
-    clientNoContextTakeover: true,
-    serverNoContextTakeover: true,
-    serverMaxWindowBits: 10,
-    concurrencyLimit: 10,
-    threshold: 1024
-  }
-});
 const RedisConfig = {
   port: 4200,
   host: "localhost",
@@ -27,6 +9,7 @@ const RedisConfig = {
 };
 
 async function main() {
+  const wss = io(5000);
   const client = createClient(RedisConfig);
   setWsHandlers(wss, client);
 }

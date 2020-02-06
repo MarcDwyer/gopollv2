@@ -1,5 +1,5 @@
 export const ASSIGN_ID = "assignid",
-  POLL_DATA = "poll_data",
+  POLL_DATA = "polldata",
   CREATE_POLL = "createpoll",
   GET_POLL = "getpoll",
-  POLL_ID = "poll-id";
+  POLL_ID = "pollid";

@@ -64,11 +64,7 @@ const CreatePoll = () => {
           onSubmit={e => {
             e.preventDefault();
             const packagedPoll = deleteNoLengthKeys(poll);
-            const payload = {
-              type: FCREATE_POLL,
-              pollData: packagedPoll
-            };
-            socket?.send(JSON.stringify(payload));
+            socket?.emit(FCREATE_POLL, packagedPoll);
           }}
         >
           <div className="question">
@@ -84,12 +80,16 @@ const CreatePoll = () => {
           <div className="options">
             {Object.entries(poll)
               .filter(([k]) => k !== "question")
-              .map(([k, v]) => {
+              .map(([k, v], i) => {
+                const addFields = {};
+                //@ts-ignore
+                if (i < 2) addFields["required"] = true;
                 return (
                   <PollInput
                     key={k}
                     autoComplete="off"
                     label={k}
+                    {...addFields}
                     name={k}
                     onChange={e => handleChange(k, e.target.value)}
                     variant="outlined"
