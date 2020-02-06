@@ -1,12 +1,13 @@
 import { Server } from "socket.io";
 import { RedisClient } from "redis";
 
-import { Poll } from "./types/poll_types";
+import { Poll, Option, VotePayload } from "./types/poll_types";
 import {
   CREATE_POLL,
   GET_POLL,
   POLL_ID,
-  POLL_DATA
+  POLL_DATA,
+  VOTE
 } from "./types/message_cases";
 
 import RedisPolls from "./redis_client";
@@ -26,7 +27,12 @@ export const setWsHandlers = (wss: Server, client: RedisClient) => {
     client.on(GET_POLL, async (id: string) => {
       console.log(id);
       const poll = await redisPolls.getPoll(id);
+      client.join(poll.id);
       client.emit(POLL_DATA, poll);
+    });
+    client.on(VOTE, (vote: VotePayload) => {
+      console.log(vote);
+      client.to(vote.id).emit(JSON.stringify(vote));
     });
   });
 };

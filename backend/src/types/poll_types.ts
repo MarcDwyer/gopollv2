@@ -3,7 +3,7 @@ export type Poll = {
   question: string;
 };
 
-type Option = {
+export type Option = {
   value: string;
   count: number;
 };
@@ -18,3 +18,7 @@ export type PollIDPayload = {
   id: string;
   type: string;
 };
+
+export interface VotePayload extends Option {
+  id: string;
+}

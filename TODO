@@ -18,6 +18,7 @@
     ✔ Package data to have a count property in each option @done(20-02-05 18:55)
         something like { polloption: "something", count: 10 }
     ☐ Create Timeout func that deletes poll at x amount of hours
+    ☐ Every Poll should have ips of clients who have already voted on a poll
     
 ☐ Complete Frontend @started(20-02-02 20:49)
     ✔ Make homepage on frontend @started(20-02-01 16:48) @done(20-02-02 22:01) @lasted(1d5h13m58s)
