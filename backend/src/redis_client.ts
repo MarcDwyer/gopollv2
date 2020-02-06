@@ -8,12 +8,14 @@ import { structOptions } from "./poll_funcs";
 export type ClientPromises = {
   getAsync(id: string): Promise<string>;
   setAsync(id: string, data: string): Promise<boolean>;
+  delAsync(id: string | string[]): Promise<string>;
 };
 
 const clientPromises = (client: RedisClient): ClientPromises => {
   return {
     getAsync: promisify(client.get).bind(client),
-    setAsync: promisify(client.set).bind(client)
+    setAsync: promisify(client.set).bind(client),
+    delAsync: promisify(client.del).bind(client)
   };
 };
 
