@@ -19,6 +19,12 @@ export type PollIDPayload = {
   type: string;
 };
 
-export interface VotePayload extends Option {
+export interface VotePayload {
   id: string;
+  option: string;
 }
+
+export type TRedisPoll = {
+  pollData: PollData;
+  voted_ips: { [key: string]: boolean };
+};

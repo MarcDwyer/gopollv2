@@ -3,13 +3,14 @@ import {
   Card,
   InnerCard,
   PollInput,
-  MyButton
-} from "../../../styled-components/styles";
+  MyButton,
+  CardHeader
+} from "../../styled-components/styles";
 import { useSelector } from "react-redux";
-import { ReduxStore } from "../../../reducers/reducers";
+import { ReduxStore } from "../../reducers/reducers";
 
 import "./create.scss";
-import { FCREATE_POLL } from "../../../types/message_types";
+import { FCREATE_POLL } from "../../types/message_types";
 
 type TPollInput = {
   [key: string]: string;
@@ -58,7 +59,7 @@ const CreatePoll = () => {
   return (
     <Card>
       <InnerCard width="550px">
-        <span className="create-header">Create a poll!</span>
+        <CardHeader>Create a poll!</CardHeader>
         <form
           style={{ display: "flex", flexDirection: "column" }}
           onSubmit={e => {

@@ -4,18 +4,18 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import io from "socket.io-client";
 
-import { setSocket } from "../../../actions/socket_actions";
+import { setSocket } from "../../actions/socket_actions";
 
 import CreatePoll from "../Create-Poll/create";
-import Nav from "../../../components/Nav/nav";
+import Nav from "../../components/Nav/nav";
 
-import { FPoll, FPollData } from "../../../types/poll_types";
-import { FPOLL_DATA, FPOLL_ID } from "../../../types/message_types";
+import { FPoll, FPollData } from "../../types/poll_types";
+import { FPOLL_DATA, FPOLL_ID } from "../../types/message_types";
 
 import PollViewer from "../Poll-Viewer/poll-viewer";
 
 import "./main.scss";
-import { setPoll } from "../../../actions/poll_actions";
+import { setPoll } from "../../actions/poll_actions";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ const Main = () => {
         console.log("poll not found");
         return;
       }
+      console.log(poll);
       dispatch(setPoll(poll));
     });
   };

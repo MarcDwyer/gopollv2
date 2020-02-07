@@ -26,3 +26,7 @@ export const PollInput = styled(TextField)`
 `;
 
 export const MyButton = styled(Button)``;
+
+export const CardHeader = styled.span`
+  font-size: 27px;
+`;

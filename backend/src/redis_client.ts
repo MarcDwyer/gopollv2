@@ -21,7 +21,7 @@ const clientPromises = (client: RedisClient): ClientPromises => {
 
 class RedisPolls {
   private client: RedisClient;
-  private promises: ClientPromises;
+  public promises: ClientPromises;
   constructor(client: RedisClient) {
     this.client = client;
     this.promises = clientPromises(client);

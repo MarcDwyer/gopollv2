@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
 import { RedisClient } from "redis";
 
-import { Poll, Option, VotePayload } from "./types/poll_types";
+import { Poll, VotePayload } from "./types/poll_types";
 import {
   CREATE_POLL,
   GET_POLL,
@@ -11,7 +11,6 @@ import {
 } from "./types/message_cases";
 
 import RedisPolls from "./redis_client";
-import Rooms from "./rooms";
 
 export interface MySocket extends WebSocket {
   id?: string;
@@ -25,14 +24,23 @@ export const setWsHandlers = (wss: Server, client: RedisClient) => {
       client.emit(POLL_ID, newID);
     });
     client.on(GET_POLL, async (id: string) => {
-      console.log(id);
       const poll = await redisPolls.getPoll(id);
       client.join(poll.id);
       client.emit(POLL_DATA, poll);
     });
-    client.on(VOTE, (vote: VotePayload) => {
-      console.log(vote);
-      client.to(vote.id).emit(JSON.stringify(vote));
+    client.on(VOTE, async (vote: VotePayload) => {
+      const { setAsync } = redisPolls.promises;
+      const modifyPoll = await redisPolls.getPoll(vote.id);
+      if (vote.option in modifyPoll.options) {
+        modifyPoll.options[vote.option].count += 1;
+      }
+      console.log(modifyPoll);
+      const isSet = await setAsync(modifyPoll.id, JSON.stringify(modifyPoll));
+      if (isSet) {
+        wss.to(modifyPoll.id).emit(POLL_DATA, modifyPoll);
+      } else {
+        console.log("it dont work good");
+      }
     });
   });
 };

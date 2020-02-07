@@ -8,7 +8,7 @@ import thunk from "redux-thunk";
 
 import Reducers from "./reducers/reducers";
 
-import Main from "./containers/Main/Main/main";
+import Main from "./containers/Main/main";
 
 import "./index.css";
 
