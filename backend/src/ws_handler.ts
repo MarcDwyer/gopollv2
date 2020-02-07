@@ -16,21 +16,21 @@ export interface MySocket extends WebSocket {
   id?: string;
 }
 export const setWsHandlers = (wss: Server, client: RedisClient) => {
-  const redisPolls = new RedisPolls(client);
+  const redisMethods = new RedisPolls(client);
 
   wss.on("connection", client => {
     client.on(CREATE_POLL, async (poll: Poll) => {
-      const newID = await redisPolls.createPoll(poll);
+      const newID = await redisMethods.createPoll(poll);
       client.emit(POLL_ID, newID);
     });
     client.on(GET_POLL, async (id: string) => {
-      const poll = await redisPolls.getPoll(id);
+      const poll = await redisMethods.getPoll(id);
       client.join(poll.id);
       client.emit(POLL_DATA, poll);
     });
     client.on(VOTE, async (vote: VotePayload) => {
-      const { setAsync } = redisPolls.promises;
-      const modifyPoll = await redisPolls.getPoll(vote.id);
+      const { setAsync } = redisMethods.promises;
+      const modifyPoll = await redisMethods.getPoll(vote.id);
       if (vote.option in modifyPoll.options) {
         modifyPoll.options[vote.option].count += 1;
       }
@@ -38,8 +38,6 @@ export const setWsHandlers = (wss: Server, client: RedisClient) => {
       const isSet = await setAsync(modifyPoll.id, JSON.stringify(modifyPoll));
       if (isSet) {
         wss.to(modifyPoll.id).emit(POLL_DATA, modifyPoll);
-      } else {
-        console.log("it dont work good");
       }
     });
   });

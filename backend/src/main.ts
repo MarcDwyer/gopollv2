@@ -10,7 +10,7 @@ const RedisConfig = {
 };
 
 async function main() {
-  const wss = io(5000);
+  const wss = io(process.env.PORT || 5000);
   wss.adapter(redisAdapter(RedisConfig));
   const client = createClient(RedisConfig);
   setWsHandlers(wss, client);
