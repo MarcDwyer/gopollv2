@@ -18,3 +18,7 @@ export type FPollIDPayload = {
   id: string;
   type: string;
 };
+
+export type FErrorMessage = {
+  error: string;
+};

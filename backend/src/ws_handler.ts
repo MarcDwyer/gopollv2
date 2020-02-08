@@ -7,30 +7,38 @@ import {
   GET_POLL,
   POLL_ID,
   POLL_DATA,
+  BERROR,
   VOTE
 } from "./types/message_cases";
+import validate from "uuid-validate";
 
-import RedisPolls from "./redis_client";
+import { RedisPolls, RedisIps } from "./redis_client";
 
-export interface MySocket extends WebSocket {
-  id?: string;
-}
-export const setWsHandlers = (wss: Server, client: RedisClient) => {
-  const redisMethods = new RedisPolls(client);
+export const setWsHandlers = (
+  wss: Server,
+  pollClient: RedisClient,
+  ipClient: RedisClient
+) => {
+  const polls = new RedisPolls(pollClient);
+  const ips = new RedisIps(ipClient);
 
   wss.on("connection", client => {
     client.on(CREATE_POLL, async (poll: Poll) => {
-      const newID = await redisMethods.createPoll(poll);
+      const newID = await polls.createPoll(poll);
       client.emit(POLL_ID, newID);
     });
     client.on(GET_POLL, async (id: string) => {
-      const poll = await redisMethods.getPoll(id);
+      if (!validate(id)) {
+        client.emit(BERROR, { error: "Not a valid uuid" });
+        return;
+      }
+      const poll = await polls.getPoll(id);
       client.join(poll.id);
       client.emit(POLL_DATA, poll);
     });
     client.on(VOTE, async (vote: VotePayload) => {
-      const { setAsync } = redisMethods.promises;
-      const modifyPoll = await redisMethods.getPoll(vote.id);
+      const { setAsync } = polls.promises;
+      const modifyPoll = await polls.getPoll(vote.id);
       if (vote.option in modifyPoll.options) {
         modifyPoll.options[vote.option].count += 1;
       }

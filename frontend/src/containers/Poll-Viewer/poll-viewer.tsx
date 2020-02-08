@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import validate from "uuid-validate";
-import { Route, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ReduxStore } from "../../reducers/reducers";
 import { FGET_POLL } from "../../types/message_types";
+import { Card, InnerCard } from "../../styled-components/styles";
 
 import VotePoll from "../../components/VotePoll/vote_poll";
+import Chart from "../../components/Chart/chart";
+import { CardHeader } from "../../styled-components/styles";
 
 type Params = {
   view: string;
@@ -13,7 +16,7 @@ type Params = {
 };
 
 const PollViewer = () => {
-  const { view, pollID } = useParams<Params>();
+  const { pollID, view } = useParams<Params>();
   const { poll, socket } = useSelector((state: ReduxStore) => state);
 
   useEffect(() => {
@@ -25,15 +28,24 @@ const PollViewer = () => {
       }
     }
   }, [socket]);
+
+  const renderView = () => {
+    if (!socket || !poll) {
+      return null;
+    }
+    switch (view) {
+      case "vote":
+        return <VotePoll socket={socket} poll={poll} />;
+      case "chart":
+        return <Chart poll={poll} />;
+      default:
+        return <CardHeader>Invalid URL</CardHeader>;
+    }
+  };
   return (
-    <React.Fragment>
-      {poll && socket && (
-        <Route
-          path={`/vote/:pollID`}
-          render={props => <VotePoll {...props} poll={poll} socket={socket} />}
-        />
-      )}
-    </React.Fragment>
+    <Card>
+      <InnerCard width="550px">{renderView()}</InnerCard>
+    </Card>
   );
 };
 

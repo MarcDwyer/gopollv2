@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
+import io from "socket.io-client";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import io from "socket.io-client";
 
 import { setSocket } from "../../actions/socket_actions";
 
 import CreatePoll from "../Create-Poll/create";
 import Nav from "../../components/Nav/nav";
 
-import { FPoll, FPollData } from "../../types/poll_types";
-import { FPOLL_DATA, FPOLL_ID } from "../../types/message_types";
+import { FPollData, FErrorMessage } from "../../types/poll_types";
+import { FPOLL_DATA, FPOLL_ID, FBERROR } from "../../types/message_types";
 
 import PollViewer from "../Poll-Viewer/poll-viewer";
 
-import "./main.scss";
 import { setPoll } from "../../actions/poll_actions";
+
+import "./main.scss";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -39,8 +40,10 @@ const Main = () => {
       console.log(poll);
       dispatch(setPoll(poll));
     });
+    wss.on(FBERROR, (err: FErrorMessage) => {
+      console.log(err);
+    });
   };
-  console.log("main rendered");
   return (
     <div className="main">
       <Nav />

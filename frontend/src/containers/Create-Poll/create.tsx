@@ -9,8 +9,9 @@ import {
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../reducers/reducers";
 
-import "./create.scss";
 import { FCREATE_POLL } from "../../types/message_types";
+
+import "./create.scss";
 
 type TPollInput = {
   [key: string]: string;

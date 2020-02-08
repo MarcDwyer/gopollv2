@@ -4,4 +4,5 @@ export const ASSIGN_ID = "assignid",
   GET_POLL = "getpoll",
   POLL_ID = "pollid",
   JOIN_ROOM = "joinroom",
-  VOTE = "vote";
+  VOTE = "vote",
+  BERROR = "error";

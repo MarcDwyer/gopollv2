@@ -28,3 +28,7 @@ export type TRedisPoll = {
   pollData: PollData;
   voted_ips: { [key: string]: boolean };
 };
+
+export type CustomError = {
+  error: string;
+};
