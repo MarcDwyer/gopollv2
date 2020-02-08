@@ -10,13 +10,15 @@ export type ClientPromises = {
   getAsync(id: string): Promise<string>;
   setAsync(id: string, data: string): Promise<boolean>;
   delAsync(id: string | string[]): Promise<string>;
+  dbAsync(index: number): Promise<boolean>;
 };
 
 const clientPromises = (client: RedisClient): ClientPromises => {
   return {
     getAsync: promisify(client.get).bind(client),
     setAsync: promisify(client.set).bind(client),
-    delAsync: promisify(client.del).bind(client)
+    delAsync: promisify(client.del).bind(client),
+    dbAsync: promisify(client.select).bind(client)
   };
 };
 
@@ -36,6 +38,9 @@ class RedisMethods {
       return null;
     }
   }
+  async selectDb(index: number) {
+    return await this.promises.dbAsync(index);
+  }
 }
 
 class RedisPolls extends RedisMethods {
@@ -52,7 +57,6 @@ class RedisPolls extends RedisMethods {
         question: poll.question,
         options: opts
       };
-      console.log(newPoll);
       await setAsync(id, JSON.stringify(newPoll));
       return id;
     } catch (err) {
@@ -60,11 +64,15 @@ class RedisPolls extends RedisMethods {
       return null;
     }
   }
-  async getPoll(id: string): Promise<PollData> {
-    const { getAsync } = this.promises;
+  async castVote(poll_id: string, option: string): Promise<PollData> {
+    const { setAsync } = this.promises;
     try {
-      const poll = await getAsync(id);
-      return JSON.parse(poll);
+      const poll: PollData = await this.getAndParse(poll_id);
+      if (option in poll.options) {
+        poll.options[option].count += 1;
+      }
+      await setAsync(poll_id, JSON.stringify(poll));
+      return poll;
     } catch (err) {
       console.log(err);
       return null;
@@ -76,7 +84,7 @@ class RedisIps extends RedisMethods {
   constructor(client: RedisClient) {
     super(client);
   }
-  async addIpField(poll_id: string) {
+  async createIpField(poll_id: string) {
     const { setAsync } = this.promises;
     await setAsync(poll_id, JSON.stringify({}));
   }
@@ -92,7 +100,8 @@ class RedisIps extends RedisMethods {
   }
   async checkIpField(poll_id: string, client_ip: string): Promise<boolean> {
     //@ts-ignore
-    const ipField: IPSubField = this.getAndParse(poll_id);
+    const ipField: IPSubField = await this.getAndParse(poll_id);
+    console.log({ isIp: true, ipField });
     if (client_ip in ipField) {
       return true;
     }

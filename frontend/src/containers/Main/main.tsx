@@ -33,7 +33,8 @@ const Main = () => {
       history.push(`/vote/${id}`);
     });
     wss.on(FPOLL_DATA, (poll: FPollData) => {
-      if (!poll) {
+      console.log(poll);
+      if (!poll || !Object.keys(poll).length) {
         console.log("poll not found");
         return;
       }

@@ -28,7 +28,7 @@ const PollViewer = () => {
       }
     }
   }, [socket]);
-
+  console.log({ poll, socket });
   const renderView = () => {
     if (!socket || !poll) {
       return null;

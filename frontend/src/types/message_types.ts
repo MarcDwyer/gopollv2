@@ -4,4 +4,4 @@ export const FASSIGN_ID = "assignid",
   FGET_POLL = "getpoll",
   FPOLL_ID = "pollid",
   FVOTE = "vote",
-  FBERROR = "error";
+  FBERROR = "err";
