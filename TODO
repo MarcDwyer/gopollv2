@@ -14,13 +14,13 @@
         This is incredibly valuable to understand, in order to create a game in browser, I must know this
         https://socket.io/docs/using-multiple-nodes/
         ✔ Handle different message types @started(20-02-04 21:23) @done(20-02-05 00:22) @lasted(2h59m18s)
-        ☐ When a user creates a poll, I should return the poll's ID than push it with react-router
+        ✔ When a user creates a poll, I should return the poll's ID than push it with react-router @done(20-02-08 22:33)
     ✔ Package data to have a count property in each option @done(20-02-05 18:55)
         something like { polloption: "something", count: 10 }
         ✔ Every Poll should have ips of clients who have already voted on a poll @started(20-02-07 17:57) @done(20-02-08 21:47) @lasted(1d3h50m58s)
         Create another redis client for this, where the key is the poll_id and the values are ip: boolean
         ✔ Add some type of error handling @started(20-02-07 17:57) @done(20-02-08 21:47) @lasted(1d3h50m56s)
-        ☐ Implement ip filter feature @started(20-02-08 21:48)
+        ✔ Implement ip filter feature @started(20-02-08 21:48) @done(20-02-08 22:34) @lasted(46m14s)
         ☐ Create Timeout func that deletes poll at x amount of hours
     
 ☐ Complete Frontend @started(20-02-02 20:49)
