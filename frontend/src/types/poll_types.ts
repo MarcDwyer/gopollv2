@@ -1,6 +1,7 @@
 export type FPoll = {
-  options: { [key: string]: FOption };
+  options: string[];
   question: string;
+  filterIps: boolean;
 };
 
 type FOption = {
@@ -11,7 +12,7 @@ export type FPollData = {
   id: string;
   question: string;
   options: { [key: string]: FOption };
-  type?: string;
+  filterIps: boolean;
 };
 
 export type FPollIDPayload = {

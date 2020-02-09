@@ -10,7 +10,7 @@ export const RedisConfig = {
   password: "ihmc_sucks"
 };
 
-async function main() {
+function main() {
   const polls = new RedisPolls(createClient(RedisConfig));
   polls.selectDb(0);
   const ips = new RedisIps(createClient(RedisConfig));

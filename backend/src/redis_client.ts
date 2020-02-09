@@ -2,9 +2,9 @@ import { RedisClient } from "redis";
 import { promisify } from "util";
 import uuid from "uuid";
 
-import { Poll, PollData } from "./types/poll_types";
-import { structOptions } from "./poll_funcs";
+import { Poll, PollData, IncPoll } from "./types/poll_types";
 import { IPSubField } from "./types/ip_field_types";
+import { structPoll } from "./structure_poll";
 
 export type ClientPromises = {
   getAsync(id: string): Promise<string>;
@@ -47,18 +47,14 @@ class RedisPolls extends RedisMethods {
   constructor(client: RedisClient) {
     super(client);
   }
-  async createPoll(poll: Poll) {
+  async createPoll(poll: IncPoll): Promise<PollData | null> {
     const { setAsync } = this.promises;
     try {
       const id = uuid();
-      const opts = structOptions(poll);
-      const newPoll: PollData = {
-        id,
-        question: poll.question,
-        options: opts
-      };
-      await setAsync(id, JSON.stringify(newPoll));
-      return id;
+      const newpoll: PollData = { ...structPoll(poll), id };
+      console.log(newpoll);
+      await setAsync(id, JSON.stringify(newpoll));
+      return newpoll;
     } catch (err) {
       console.log(err);
       return null;
@@ -96,16 +92,16 @@ class RedisIps extends RedisMethods {
       return;
     }
     ipField[client_ip] = true;
+    console.log(ipField);
     await setAsync(poll_id, JSON.stringify(ipField));
   }
   async checkIpField(poll_id: string, client_ip: string): Promise<boolean> {
     //@ts-ignore
     const ipField: IPSubField = await this.getAndParse(poll_id);
-    console.log({ isIp: true, ipField });
     if (client_ip in ipField) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 }
 export { RedisPolls, RedisIps };

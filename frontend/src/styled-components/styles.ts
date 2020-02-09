@@ -27,6 +27,9 @@ export const PollInput = styled(TextField)`
 
 export const MyButton = styled(Button)``;
 
-export const CardHeader = styled.span`
-  font-size: 27px;
+type PMyHeader = {
+  fontSize?: string;
+};
+export const MyHeader = styled.span<PMyHeader>`
+  font-size: ${p => p.fontSize || "27px"};
 `;

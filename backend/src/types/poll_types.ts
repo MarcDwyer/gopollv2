@@ -1,6 +1,13 @@
 export type Poll = {
   options: { [key: string]: Option };
   question: string;
+  filterIps: boolean;
+};
+
+export type IncPoll = {
+  options: string[];
+  question: string;
+  filterIps: boolean;
 };
 
 export type Option = {
@@ -11,7 +18,7 @@ export type PollData = {
   id: string;
   question: string;
   options: { [key: string]: Option };
-  type?: string;
+  filterIps: boolean;
 };
 
 export type PollIDPayload = {
@@ -22,6 +29,7 @@ export type PollIDPayload = {
 export interface VotePayload {
   id: string;
   option: string;
+  filterIps: string;
 }
 
 export type TRedisPoll = {

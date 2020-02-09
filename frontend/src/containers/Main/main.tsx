@@ -5,16 +5,17 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { setSocket } from "../../actions/socket_actions";
+import { setPoll } from "../../actions/poll_actions";
 
 import CreatePoll from "../Create-Poll/create";
-import Nav from "../../components/Nav/nav";
+import Nav from "../Nav/nav";
 
 import { FPollData, FErrorMessage } from "../../types/poll_types";
 import { FPOLL_DATA, FPOLL_ID, FBERROR } from "../../types/message_types";
 
 import PollViewer from "../Poll-Viewer/poll-viewer";
 
-import { setPoll } from "../../actions/poll_actions";
+import { setError } from "../../actions/error_actions";
 
 import "./main.scss";
 
@@ -42,16 +43,18 @@ const Main = () => {
       dispatch(setPoll(poll));
     });
     wss.on(FBERROR, (err: FErrorMessage) => {
-      console.log(err);
+      dispatch(setError(err));
     });
   };
   return (
     <div className="main">
       <Nav />
-      <Switch>
-        <Route path={"/:view/:pollID"} component={PollViewer} />
-        <Route path="/" component={CreatePoll} />
-      </Switch>
+      <div className="poll-viewer">
+        <Switch>
+          <Route path={"/:view/:pollID"} component={PollViewer} />
+          <Route path="/" component={CreatePoll} />
+        </Switch>
+      </div>
     </div>
   );
 };

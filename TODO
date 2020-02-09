@@ -17,9 +17,10 @@
         ☐ When a user creates a poll, I should return the poll's ID than push it with react-router
     ✔ Package data to have a count property in each option @done(20-02-05 18:55)
         something like { polloption: "something", count: 10 }
-        ☐ Every Poll should have ips of clients who have already voted on a poll @started(20-02-07 17:57)
+        ✔ Every Poll should have ips of clients who have already voted on a poll @started(20-02-07 17:57) @done(20-02-08 21:47) @lasted(1d3h50m58s)
         Create another redis client for this, where the key is the poll_id and the values are ip: boolean
-        ☐ Add some type of error handling @started(20-02-07 17:57)
+        ✔ Add some type of error handling @started(20-02-07 17:57) @done(20-02-08 21:47) @lasted(1d3h50m56s)
+        ☐ Implement ip filter feature @started(20-02-08 21:48)
         ☐ Create Timeout func that deletes poll at x amount of hours
     
 ☐ Complete Frontend @started(20-02-02 20:49)
@@ -27,7 +28,8 @@
     ☐ Make CreatePoll Component @started(20-02-02 20:31)
         PollOptions should render a new input if last Polloption has been filled.
         ✔ Use Formik for poll creation, to allow for easier form making and validation @started(20-02-04 03:00) @done(20-02-04 03:00) @lasted(51s)
-            ☐ Implement some Yup validation schema
+            ✘ Implement some Yup validation schema @started(20-02-08 21:49) @cancelled(20-02-08 21:49) @wasted(38s)
+                Validation didnt end up becoming a big deal, just used the built in required field
 
 ☐ Complete Redis DB @started(20-02-02 22:47)
 Redis is being used in order to achieve horizontal scalability and quick changes to polls

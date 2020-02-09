@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
 import { createClient } from "redis";
 
-import { Poll, VotePayload, PollData } from "./types/poll_types";
+import { Poll, VotePayload, PollData, IncPoll } from "./types/poll_types";
 import {
   CREATE_POLL,
   GET_POLL,
@@ -20,10 +20,13 @@ export const setWsHandlers = (
   ips: RedisIps
 ) => {
   wss.on("connection", client => {
-    client.on(CREATE_POLL, async (poll: Poll) => {
-      const newID = await polls.createPoll(poll);
-      await ips.createIpField(newID);
-      client.emit(POLL_ID, newID);
+    client.on(CREATE_POLL, async (poll: IncPoll) => {
+      console.log(poll);
+      const { filterIps, id } = await polls.createPoll(poll);
+      if (filterIps) {
+        await ips.createIpField(id);
+      }
+      client.emit(POLL_ID, id);
     });
     client.on(GET_POLL, async (id: string) => {
       if (!validate(id)) {
@@ -36,18 +39,19 @@ export const setWsHandlers = (
       client.emit(POLL_DATA, poll);
     });
     client.on(VOTE, async (vote: VotePayload) => {
-      const { id, option } = vote;
+      const { id, option, filterIps } = vote;
       const client_ip = client.request.connection.remoteAddress;
-      console.log(client_ip);
-      const didVote = await ips.checkIpField(id, client_ip);
-      console.log(didVote);
-      if (didVote) {
+      let canVote = true;
+      if (filterIps) {
+        canVote = await ips.checkIpField(vote.id, client_ip);
+        if (canVote) await ips.addIpToField(vote.id, client_ip);
+      }
+      if (!canVote) {
         console.log("you voted dude");
         client.emit(BERROR, { error: "You already voted" });
       } else {
         console.log("didnt vote yet");
         const newPoll = await polls.castVote(id, option);
-        await ips.addIpToField(vote.id, client_ip);
         wss.to(newPoll.id).emit(POLL_DATA, newPoll);
       }
     });

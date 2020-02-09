@@ -8,7 +8,7 @@ import { Card, InnerCard } from "../../styled-components/styles";
 
 import VotePoll from "../../components/VotePoll/vote_poll";
 import Chart from "../../components/Chart/chart";
-import { CardHeader } from "../../styled-components/styles";
+import { MyHeader } from "../../styled-components/styles";
 
 type Params = {
   view: string;
@@ -28,7 +28,6 @@ const PollViewer = () => {
       }
     }
   }, [socket]);
-  console.log({ poll, socket });
   const renderView = () => {
     if (!socket || !poll) {
       return null;
@@ -39,7 +38,7 @@ const PollViewer = () => {
       case "chart":
         return <Chart poll={poll} />;
       default:
-        return <CardHeader>Invalid URL</CardHeader>;
+        return <MyHeader>Invalid URL</MyHeader>;
     }
   };
   return (

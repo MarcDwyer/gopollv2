@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { FPollData } from "../../types/poll_types";
-import { RouteComponentProps } from "react-router";
 import { useHistory } from "react-router-dom";
 import {
   FormControl,
@@ -11,7 +10,7 @@ import {
   Button
 } from "@material-ui/core";
 
-import { CardHeader } from "../../styled-components/styles";
+import { MyHeader } from "../../styled-components/styles";
 import { FVOTE } from "../../types/message_types";
 
 interface Props {
@@ -26,15 +25,18 @@ const VotePoll = (props: Props) => {
     if (selected) {
       const castedVote = {
         id: props.poll.id,
+        filterIps: props.poll.filterIps,
         option: selected
       };
       props.socket.emit(FVOTE, castedVote);
       history.push(`/chart/${castedVote.id}`);
     }
+    // TODO: Add Error msg here
+    // user must have selected an option
   };
   return (
     <React.Fragment>
-      <CardHeader>{props.poll.question}</CardHeader>
+      <MyHeader>{props.poll.question}</MyHeader>
       <div className="poll-vote">
         <FormControl
           style={{ width: "100%" }}
