@@ -8,12 +8,13 @@
     ✔ Hook up to Redis @started(20-02-03 01:12) @done(20-02-03 01:12) @lasted(35s)
     ✘ Set up subscriptions to keys using Redis and pipe the updates to the client @started(20-02-03 01:13) @cancelled(20-02-03 22:01) @wasted(20h48m15s)
       Read https://github.com/NodeRedis/node_redis to get this to work
-    ☐ Set up websockets @started(20-02-04 03:02)
+    ✔ Set up websockets @started(20-02-04 03:02) @done(20-02-10 05:45) @lasted(6d2h43m10s)
         Do I want to go extremely hard and do some kind of horizontal scaling?
         Must read more about redis sub/pub, not really understanding how it would work with my websockets 
         This is incredibly valuable to understand, in order to create a game in browser, I must know this
         https://socket.io/docs/using-multiple-nodes/
         ✔ Handle different message types @started(20-02-04 21:23) @done(20-02-05 00:22) @lasted(2h59m18s)
+            This was done by using SocketIOs built in rooms
         ✔ When a user creates a poll, I should return the poll's ID than push it with react-router @done(20-02-08 22:33)
     ✔ Package data to have a count property in each option @done(20-02-05 18:55)
         something like { polloption: "something", count: 10 }
@@ -22,7 +23,7 @@
         ✔ Add some type of error handling @started(20-02-07 17:57) @done(20-02-08 21:47) @lasted(1d3h50m56s)
         ✔ Implement ip filter feature @started(20-02-08 21:48) @done(20-02-08 22:34) @lasted(46m14s)
         ✔ Create Timeout func that deletess poll at x amount of hours @done(20-02-10 02:11)
-    ☐ Check clients real IP @started(20-02-10 05:15)
+    ✔ Check clients real IP @started(20-02-10 05:15) @done(20-02-10 05:46) @lasted(31m8s)
         Use key [x-real-ip] in client headers to see the clients real IP
         ☐ Add some error checking if ip isnt defined @started(20-02-10 05:16)
 
