@@ -24,7 +24,7 @@ const Main = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const ws = io("http://localhost:5000");
+    const ws = io(`https://${document.location.hostname}:5002`);
     socketHandler(ws);
     dispatch(setSocket(ws));
   }, []);
