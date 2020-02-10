@@ -45,8 +45,8 @@ export const setWsHandlers = (
     });
     client.on(VOTE, async (vote: VotePayload) => {
       const { id, option, filterIps } = vote;
-      const client_ip = client.request.connection.remoteAddress;
-      console.log(client_ip);
+      const client_ip = client.request.conneciton.remoteAddress;
+      console.log({ client_ip, handShake: client.handshake.address });
       const canVote = filterIps
         ? await ips.checkIpField(vote.id, client_ip)
         : true;
