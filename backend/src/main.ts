@@ -8,9 +8,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const { DBHOST } = process.env;
+console.log(DBHOST);
 export const RedisConfig = {
   port: 4200,
-  host: process.env.ISPROD ? "redis" : "localhost",
+  host: DBHOST || "localhost",
   password: process.env.DBUSER
 };
 
