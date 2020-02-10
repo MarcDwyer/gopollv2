@@ -10,7 +10,7 @@ dotenv.config();
 
 export const RedisConfig = {
   port: 4200,
-  host: "localhost",
+  host: process.env.ISPROD ? "redis" : "localhost",
   password: process.env.DBUSER
 };
 
