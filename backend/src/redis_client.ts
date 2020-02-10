@@ -41,6 +41,14 @@ class RedisMethods {
   async selectDb(index: number) {
     return await this.promises.dbAsync(index);
   }
+  async delField(id: string) {
+    const { delAsync } = this.promises;
+    try {
+      return await delAsync(id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 class RedisPolls extends RedisMethods {

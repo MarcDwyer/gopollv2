@@ -34,12 +34,10 @@ const Main = () => {
       history.push(`/vote/${id}`);
     });
     wss.on(FPOLL_DATA, (poll: FPollData) => {
-      console.log(poll);
       if (!poll || !Object.keys(poll).length) {
         console.log("poll not found");
         return;
       }
-      console.log(poll);
       dispatch(setPoll(poll));
     });
     wss.on(FBERROR, (err: FErrorMessage) => {

@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
-import { createClient } from "redis";
 
-import { Poll, VotePayload, PollData, IncPoll } from "./types/poll_types";
+import { VotePayload, PollData, IncPoll } from "./types/poll_types";
 import {
   CREATE_POLL,
   GET_POLL,
@@ -21,12 +20,15 @@ export const setWsHandlers = (
 ) => {
   wss.on("connection", client => {
     client.on(CREATE_POLL, async (poll: IncPoll) => {
-      console.log(poll);
       const { filterIps, id } = await polls.createPoll(poll);
       if (filterIps) {
         await ips.createIpField(id);
       }
       client.emit(POLL_ID, id);
+      setTimeout(() => {
+        if (filterIps) ips.delField(id);
+        polls.delField(id);
+      }, 60000 * 60 * 4);
     });
     client.on(GET_POLL, async (id: string) => {
       if (!validate(id)) {
@@ -34,26 +36,28 @@ export const setWsHandlers = (
         return;
       }
       const poll: PollData = await polls.getAndParse(id);
-      console.log(poll);
+      if (!poll) {
+        client.emit(BERROR, { error: "Poll does not exist" });
+        return;
+      }
       client.join(poll.id);
       client.emit(POLL_DATA, poll);
     });
     client.on(VOTE, async (vote: VotePayload) => {
       const { id, option, filterIps } = vote;
       const client_ip = client.request.connection.remoteAddress;
-      let canVote = true;
-      if (filterIps) {
-        canVote = await ips.checkIpField(vote.id, client_ip);
-        if (canVote) await ips.addIpToField(vote.id, client_ip);
-      }
+      const canVote = filterIps
+        ? await ips.checkIpField(vote.id, client_ip)
+        : true;
+
       if (!canVote) {
         console.log("you voted dude");
         client.emit(BERROR, { error: "You already voted" });
-      } else {
-        console.log("didnt vote yet");
-        const newPoll = await polls.castVote(id, option);
-        wss.to(newPoll.id).emit(POLL_DATA, newPoll);
+        return;
       }
+      const newPoll = await polls.castVote(id, option);
+      if (vote.filterIps) ips.addIpToField(vote.id, client_ip);
+      wss.to(newPoll.id).emit(POLL_DATA, newPoll);
     });
   });
 };

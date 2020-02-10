@@ -1,8 +1,9 @@
-import { setWsHandlers } from "./ws_handler";
 import io from "socket.io";
 import redisAdapter from "socket.io-redis";
 import { createClient } from "redis";
+
 import { RedisPolls, RedisIps } from "./redis_client";
+import { setWsHandlers } from "./ws_handler";
 
 export const RedisConfig = {
   port: 4200,

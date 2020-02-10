@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import validate from "uuid-validate";
 import { useParams } from "react-router-dom";
@@ -18,18 +18,29 @@ type Params = {
 const PollViewer = () => {
   const { pollID, view } = useParams<Params>();
   const { poll, socket } = useSelector((state: ReduxStore) => state);
+  const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    if (socket && pollID) {
-      const isValid = validate(pollID);
-      console.log(isValid);
-      if (isValid) {
-        socket.emit(FGET_POLL, pollID);
-      }
+    setValid(validate(pollID));
+  }, [pollID]);
+
+  useEffect(() => {
+    if (valid) {
+      socket?.emit(FGET_POLL, pollID);
     }
-  }, [socket]);
+  }, [valid]);
+
   const renderView = () => {
-    if (!socket || !poll) {
+    if (!socket) {
+      return null;
+    }
+    if (!poll && valid) {
+      return <MyHeader>Poll doesn't exist</MyHeader>;
+    }
+    if (!valid) {
+      return <MyHeader>Not a valid poll ID</MyHeader>;
+    }
+    if (!poll) {
       return null;
     }
     switch (view) {
