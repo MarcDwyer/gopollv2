@@ -10,9 +10,9 @@ services:
   backend:
     build: backend
     ports:
-      - "5000:5000"
+      - "5002:5002"
     container_name: gopollv2_backend
     restart: always
     environment:
-      - PORT=5000
+      - PORT=5002
       - DBPASS=ihmc_sucks
