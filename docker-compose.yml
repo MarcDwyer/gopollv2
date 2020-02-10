@@ -6,3 +6,13 @@ services:
       - "4200:4200"
     container_name: myredisdb
     restart: always
+
+  backend:
+    build: backend
+    ports:
+      - "5000:5000"
+    container_name: gopollv2_backend
+    restart: always
+    environment:
+      - PORT=5000
+      - DBPASS=ihmc_sucks

@@ -37,3 +37,5 @@ Redis is being used in order to achieve horizontal scalability and quick changes
         https://hub.docker.com/_/redis/ 
         ✔ Make a redis.conf file @started(20-02-02 22:47) @done(20-02-02 22:47) @lasted(49s)
             Add requirepass to redis.config file in "./myredis"
+
+☐ Create Dockerfiles for each service @started(20-02-10 03:16)

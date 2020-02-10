@@ -4,11 +4,14 @@ import { createClient } from "redis";
 
 import { RedisPolls, RedisIps } from "./redis_client";
 import { setWsHandlers } from "./ws_handler";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const RedisConfig = {
   port: 4200,
   host: "localhost",
-  password: "ihmc_sucks"
+  password: process.env.DBUSER
 };
 
 function main() {
@@ -17,7 +20,7 @@ function main() {
   const ips = new RedisIps(createClient(RedisConfig));
   ips.selectDb(1);
 
-  const wss = io(process.env.PORT || 5000);
+  const wss = io(process.env.PORT);
   wss.adapter(redisAdapter(RedisConfig));
 
   setWsHandlers(wss, polls, ips);

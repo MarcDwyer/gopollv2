@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/redis": "^2.8.14",
     "@types/socket.io": "^2.1.4",
     "@types/socket.io-redis": "^1.0.25",
@@ -17,6 +18,7 @@
     "@types/uuid-validate": "0.0.1",
     "@types/ws": "^7.2.1",
     "apollo-server": "^2.10.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^14.6.0",
     "graphql-redis-subscriptions": "^2.1.2",
