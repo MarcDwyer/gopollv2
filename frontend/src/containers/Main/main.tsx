@@ -24,7 +24,14 @@ const Main = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const ws = io(`https://${document.location.hostname}`, {
+    const isDev =
+      !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
+    const url = isDev
+      ? "http://localhost:5002"
+      : `https://${document.location.hostname}`;
+
+    const ws = io(url, {
       secure: true
     });
     socketHandler(ws);
