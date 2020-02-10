@@ -19,14 +19,14 @@ import { setError } from "../../actions/error_actions";
 
 import "./main.scss";
 
+export const isDev =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
 const Main = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    const isDev =
-      !process.env.NODE_ENV || process.env.NODE_ENV === "development";
-
     const url = isDev
       ? "http://localhost:5002"
       : `https://${document.location.hostname}`;
