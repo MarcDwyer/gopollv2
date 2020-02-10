@@ -24,7 +24,9 @@ const Main = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const ws = io(`https://${document.location.hostname}:5002`);
+    const ws = io(`https://${document.location.hostname}`, {
+      secure: true
+    });
     socketHandler(ws);
     dispatch(setSocket(ws));
   }, []);
