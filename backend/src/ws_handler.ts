@@ -45,22 +45,21 @@ export const setWsHandlers = (
     });
     client.on(VOTE, async (vote: VotePayload) => {
       const { id, option, filterIps } = vote;
-      // TODO: Add some error checking for client's ip
-      // Figure out how to clean this up
-      const client_ip = client.handshake.headers["x-real-ip"];
 
-      const canVote = filterIps
-        ? await ips.checkIpField(vote.id, client_ip)
-        : true;
+      let canVote = true;
+      const client_ip: string =
+        client.handshake.headers["x-real-ip"] || "localhost";
 
-      if (!canVote) {
-        console.log("you voted dude");
-        client.emit(BERROR, { error: "You already voted" });
-        return;
+      if (filterIps) {
+        canVote = await ips.checkIpField(id, client_ip);
       }
-      const newPoll = await polls.castVote(id, option);
-      if (vote.filterIps) ips.addIpToField(vote.id, client_ip);
-      wss.to(newPoll.id).emit(POLL_DATA, newPoll);
+      if (canVote) {
+        const newPoll = await polls.castVote(id, option);
+        if (filterIps) ips.addIpToField(id, client_ip);
+        wss.to(id).emit(POLL_DATA, newPoll);
+      } else {
+        client.emit(BERROR, { error: "You already voted" });
+      }
     });
   });
 };

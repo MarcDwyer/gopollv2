@@ -25,7 +25,7 @@
         ✔ Create Timeout func that deletess poll at x amount of hours @done(20-02-10 02:11)
     ✔ Check clients real IP @started(20-02-10 05:15) @done(20-02-10 05:46) @lasted(31m8s)
         Use key [x-real-ip] in client headers to see the clients real IP
-        ☐ Add some error checking if ip isnt defined @started(20-02-10 05:16)
+        ✔ Add some error checking if ip isnt defined @started(20-02-10 05:16) @done(20-02-10 19:09) @lasted(13h53m36s)
 
 
 ☐ Complete Frontend @started(20-02-02 20:49)
@@ -35,8 +35,8 @@
         ✔ Use Formik for poll creation, to allow for easier form making and validation @started(20-02-04 03:00) @done(20-02-04 03:00) @lasted(51s)
             ✘ Implement some Yup validation schema @started(20-02-08 21:49) @cancelled(20-02-08 21:49) @wasted(38s)
                 Validation didnt end up becoming a big deal, just used the built in required field
-    ☐ Make submit button less prone to accidentally hitting it
-    ☐ Tidy up the Poll-View component. It should be less annoying
+    ☐ Make submit button less prone to accidentally hitting it @started(20-02-10 19:09)
+    ☐ Tidy up the Poll-View component. It should be less annoying @started(20-02-10 19:09)
 
 
 ☐ Complete Redis DB @started(20-02-02 22:47)

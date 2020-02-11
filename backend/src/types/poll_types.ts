@@ -29,7 +29,7 @@ export type PollIDPayload = {
 export interface VotePayload {
   id: string;
   option: string;
-  filterIps: string;
+  filterIps: boolean;
 }
 
 export type TRedisPoll = {

@@ -8,8 +8,9 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const { DBHOST, DBPASS } = process.env;
+const { DBHOST, DBPASS, PORT } = process.env;
 console.log({ DBHOST, DBPASS });
+
 export const RedisConfig = {
   port: 4200,
   host: DBHOST || "localhost",
@@ -22,7 +23,7 @@ function main() {
   const ips = new RedisIps(createClient(RedisConfig));
   ips.selectDb(1);
 
-  const wss = io(process.env.PORT);
+  const wss = io(PORT);
   wss.adapter(redisAdapter(RedisConfig));
 
   setWsHandlers(wss, polls, ips);
