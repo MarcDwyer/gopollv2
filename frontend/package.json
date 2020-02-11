@@ -34,6 +34,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.3.0",
+    "source-map-explorer": "^2.2.2",
     "styled-components": "^5.0.0",
     "typescript": "^3.7.5",
     "uuid-validate": "0.0.3",
@@ -43,7 +44,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": "react-app"
