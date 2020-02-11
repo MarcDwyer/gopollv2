@@ -14,7 +14,7 @@
         This is incredibly valuable to understand, in order to create a game in browser, I must know this
         https://socket.io/docs/using-multiple-nodes/
         ✔ Handle different message types @started(20-02-04 21:23) @done(20-02-05 00:22) @lasted(2h59m18s)
-            This was done by using SocketIOs built in rooms
+            This was donge by using SocketIOs built in rooms
         ✔ When a user creates a poll, I should return the poll's ID than push it with react-router @done(20-02-08 22:33)
     ✔ Package data to have a count property in each option @done(20-02-05 18:55)
         something like { polloption: "something", count: 10 }
@@ -37,6 +37,9 @@
                 Validation didnt end up becoming a big deal, just used the built in required field
     ✔ Make submit button less prone to accidentally hitting it @started(20-02-10 19:09) @done(20-02-10 20:23) @lasted(1h14m7s)
     ✔ Tidy up the Poll-View component. It should be less annoying @started(20-02-10 19:09) @done(20-02-10 20:23) @lasted(1h14m5s)
+    ☐ Create a custom share poll component
+        make a little more engaging
+    ☐ Create Info Route
 
 
 ☐ Complete Redis DB @started(20-02-02 22:47)

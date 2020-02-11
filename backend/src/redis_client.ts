@@ -2,7 +2,7 @@ import { RedisClient } from "redis";
 import { promisify } from "util";
 import uuid from "uuid";
 
-import { Poll, PollData, IncPoll } from "./types/poll_types";
+import { PollData, IncPoll } from "./types/poll_types";
 import { IPSubField } from "./types/ip_field_types";
 import { structPoll } from "./structure_poll";
 

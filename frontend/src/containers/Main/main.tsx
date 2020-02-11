@@ -9,6 +9,7 @@ import { setPoll } from "../../actions/poll_actions";
 
 import CreatePoll from "../Create-Poll/create";
 import Nav from "../Nav/nav";
+import SharePoll from "../Share-Poll/sharepoll";
 
 import { FPollData, FErrorMessage } from "../../types/poll_types";
 import { FPOLL_DATA, FPOLL_ID, FBERROR } from "../../types/message_types";
@@ -56,6 +57,7 @@ const Main = () => {
   return (
     <div className="main">
       <Nav />
+      <SharePoll />
       <div className="poll-viewer">
         <Switch>
           <Route path={"/:view/:pollID"} component={PollViewer} />
