@@ -57,7 +57,7 @@ const VotePoll = (props: Props) => {
                 <FormControlLabel
                   key={k}
                   value={k}
-                  control={<Radio />}
+                  control={<Radio color="primary" />}
                   label={v.value}
                 />
               );

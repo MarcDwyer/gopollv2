@@ -92,13 +92,22 @@ const CreatePoll = () => {
               label="Check duplicate Ips"
               control={
                 <Checkbox
+                  color="primary"
                   onChange={() => setFilter(!filterIps)}
                   checked={filterIps}
                 />
               }
             />
+            <MyButton
+              color="primary"
+              variant="outlined"
+              className="create-btn"
+              type="submit"
+              width="115px"
+            >
+              Submit
+            </MyButton>
           </div>
-          <MyButton type="submit">Submit</MyButton>
         </form>
       </InnerCard>
     </Card>

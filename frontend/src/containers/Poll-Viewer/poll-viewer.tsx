@@ -31,17 +31,11 @@ const PollViewer = () => {
   }, [valid]);
 
   const renderView = () => {
-    if (!socket) {
-      return null;
-    }
-    if (!poll && valid) {
-      return <MyHeader>Poll doesn't exist</MyHeader>;
-    }
     if (!valid) {
       return <MyHeader>Not a valid poll ID</MyHeader>;
     }
-    if (!poll) {
-      return null;
+    if (!socket || !poll) {
+      return <MyHeader>Waiting...</MyHeader>;
     }
     switch (view) {
       case "vote":

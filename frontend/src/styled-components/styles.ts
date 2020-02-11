@@ -25,7 +25,14 @@ export const PollInput = styled(TextField)`
   margin: 10px 0 10px 0 !important;
 `;
 
-export const MyButton = styled(Button)``;
+type PMyButton = {
+  width?: string;
+  margin?: string;
+};
+export const MyButton = styled(Button)<PMyButton>`
+  width: ${p => p.width || ""};
+  margin: ${p => p.margin || ""};
+`;
 
 type PMyHeader = {
   fontSize?: string;

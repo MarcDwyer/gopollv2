@@ -35,8 +35,8 @@
         ✔ Use Formik for poll creation, to allow for easier form making and validation @started(20-02-04 03:00) @done(20-02-04 03:00) @lasted(51s)
             ✘ Implement some Yup validation schema @started(20-02-08 21:49) @cancelled(20-02-08 21:49) @wasted(38s)
                 Validation didnt end up becoming a big deal, just used the built in required field
-    ☐ Make submit button less prone to accidentally hitting it @started(20-02-10 19:09)
-    ☐ Tidy up the Poll-View component. It should be less annoying @started(20-02-10 19:09)
+    ✔ Make submit button less prone to accidentally hitting it @started(20-02-10 19:09) @done(20-02-10 20:23) @lasted(1h14m7s)
+    ✔ Tidy up the Poll-View component. It should be less annoying @started(20-02-10 19:09) @done(20-02-10 20:23) @lasted(1h14m5s)
 
 
 ☐ Complete Redis DB @started(20-02-02 22:47)

@@ -60,7 +60,6 @@ class RedisPolls extends RedisMethods {
     try {
       const id = uuid();
       const newpoll: PollData = { ...structPoll(poll), id };
-      console.log(newpoll);
       await setAsync(id, JSON.stringify(newpoll));
       return newpoll;
     } catch (err) {
