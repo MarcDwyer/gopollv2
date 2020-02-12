@@ -54,6 +54,7 @@ const Main = () => {
       dispatch(setError(err));
     });
   };
+
   return (
     <div className="main">
       <Nav />

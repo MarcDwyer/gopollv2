@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { TextField, Button } from "@material-ui/core";
 
+const cardYellow = "#ffd756";
+
 export const Card = styled.div`
-  background-color: #ffd756;
+  background-color: ${cardYellow};
   display: flex;
   margin: auto;
 `;
@@ -36,7 +38,23 @@ export const MyButton = styled(Button)<PMyButton>`
 
 type PMyHeader = {
   fontSize?: string;
+  fontWeight?: string;
 };
 export const MyHeader = styled.span<PMyHeader>`
   font-size: ${p => p.fontSize || "27px"};
+  font-weight: ${p => p.fontWeight || ""};
+`;
+
+export const Notification = styled.div`
+  background-color: ${cardYellow};
+  width: 250px;
+  min-height: 150px;
+  border-top-left-radius: 15px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  animation-name: notif;
+  animation-duration: 1s;
+  z-index: 1000;
 `;

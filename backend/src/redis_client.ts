@@ -39,7 +39,8 @@ class RedisMethods {
     }
   }
   async selectDb(index: number) {
-    return await this.promises.dbAsync(index);
+    await this.promises.dbAsync(index);
+    return this;
   }
   async delField(id: string) {
     const { delAsync } = this.promises;

@@ -4,4 +4,5 @@ export const FASSIGN_ID = "assignid",
   FGET_POLL = "getpoll",
   FPOLL_ID = "pollid",
   FVOTE = "vote",
-  FBERROR = "err";
+  FBERROR = "err",
+  FREMOVE_ROOM = "removefromroom";

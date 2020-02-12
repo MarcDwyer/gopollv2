@@ -7,7 +7,8 @@ import {
   POLL_ID,
   POLL_DATA,
   BERROR,
-  VOTE
+  VOTE,
+  REMOVE_ROOM
 } from "./types/message_cases";
 import validate from "uuid-validate";
 
@@ -61,5 +62,6 @@ export const setWsHandlers = (
         client.emit(BERROR, { error: "You already voted" });
       }
     });
+    client.on(REMOVE_ROOM, () => client.leaveAll());
   });
 };

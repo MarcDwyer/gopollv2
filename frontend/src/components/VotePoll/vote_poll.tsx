@@ -6,12 +6,14 @@ import {
   FormControl,
   FormControlLabel,
   Radio,
-  RadioGroup,
-  Button
+  RadioGroup
 } from "@material-ui/core";
+import { MyButton } from "../../styled-components/styles";
 
 import { MyHeader } from "../../styled-components/styles";
 import { FVOTE } from "../../types/message_types";
+
+import "./votepoll.scss";
 
 interface Props {
   poll: FPollData;
@@ -64,9 +66,14 @@ const VotePoll = (props: Props) => {
             })}
           </RadioGroup>
         </FormControl>
-        <Button style={{ width: "100%" }} onClick={handleSubmit}>
+        <MyButton
+          style={{ margin: "10px auto auto 10px" }}
+          color="primary"
+          variant="outlined"
+          onClick={handleSubmit}
+        >
           Submit
-        </Button>
+        </MyButton>
       </div>
     </React.Fragment>
   );

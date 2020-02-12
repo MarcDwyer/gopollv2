@@ -17,11 +17,11 @@ export const RedisConfig = {
   password: DBPASS
 };
 
-function main() {
+async function main() {
   const polls = new RedisPolls(createClient(RedisConfig));
-  polls.selectDb(0);
+  await polls.selectDb(0);
   const ips = new RedisIps(createClient(RedisConfig));
-  ips.selectDb(1);
+  await ips.selectDb(1);
 
   const wss = io(PORT);
   wss.adapter(redisAdapter(RedisConfig));

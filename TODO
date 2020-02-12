@@ -26,6 +26,7 @@
     ✔ Check clients real IP @started(20-02-10 05:15) @done(20-02-10 05:46) @lasted(31m8s)
         Use key [x-real-ip] in client headers to see the clients real IP
         ✔ Add some error checking if ip isnt defined @started(20-02-10 05:16) @done(20-02-10 19:09) @lasted(13h53m36s)
+    ✔ If client recreates a new poll change their ws room @done(20-02-11 21:39)
 
 
 ☐ Complete Frontend @started(20-02-02 20:49)
@@ -37,7 +38,7 @@
                 Validation didnt end up becoming a big deal, just used the built in required field
     ✔ Make submit button less prone to accidentally hitting it @started(20-02-10 19:09) @done(20-02-10 20:23) @lasted(1h14m7s)
     ✔ Tidy up the Poll-View component. It should be less annoying @started(20-02-10 19:09) @done(20-02-10 20:23) @lasted(1h14m5s)
-    ☐ Create a custom share poll component
+    ✔ Create a custom share poll component @done(20-02-11 21:39)
         make a little more engaging
     ☐ Create Info Route
 

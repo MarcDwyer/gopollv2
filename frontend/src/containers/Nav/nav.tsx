@@ -1,18 +1,24 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReduxStore } from "../../reducers/reducers";
 
 import { MyHeader } from "../../styled-components/styles";
+import { removePoll } from "../../actions/poll_actions";
 
 import "./nav.scss";
 
 const Nav = () => {
   const err = useSelector((state: ReduxStore) => state.error);
+  const dispatch = useDispatch();
   return (
     <div className="navbar">
       <div className="inner-nav">
-        <Link to="/" className="logo header">
+        <Link
+          onClick={() => dispatch(removePoll())}
+          to="/"
+          className="logo header"
+        >
           GoPoll.me
         </Link>
         {err && (

@@ -29,7 +29,6 @@ const PollViewer = () => {
       socket?.emit(FGET_POLL, pollID);
     }
   }, [valid]);
-
   const renderView = () => {
     if (!valid) {
       return <MyHeader>Not a valid poll ID</MyHeader>;
