@@ -15,6 +15,5 @@ export default async function createPoll(
 }
 
 const deleteAfterTime = (poll_id: string, time: number = 60000 * 60 * 6) => {
-  const timer = setTimeout(() => redisClient.promises.delAsync(poll_id), time);
-  return timer;
+  return setTimeout(() => redisClient.promises.delAsync(poll_id), time);
 };
