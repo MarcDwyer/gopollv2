@@ -19,8 +19,7 @@ export const castVote = async (
       sendError("You've already voted");
       return;
     }
-    const upvotedPoll = upvote(poll, option);
-    upvotedPoll.ipFilter[client_ip] = true;
+    const upvotedPoll = upvotePoll(poll, option, client_ip);
     await redisClient.setData(upvotedPoll.id, upvotedPoll);
     //TODO: Should make a custom upvote event instead of sending entire poll
     wss.to(id).emit(POLL_DATA, upvotedPoll);
@@ -29,11 +28,16 @@ export const castVote = async (
   }
 };
 
-const upvote = (poll: PollData, option: string): PollData => {
+const upvotePoll = (
+  poll: PollData,
+  option: string,
+  client_ip: string
+): PollData => {
   const copy = { ...poll };
   if (option in copy.options) {
     copy.options[option].count += 1;
   }
+  copy.ipFilter[client_ip] = true;
   return copy;
 };
 const checkIfVoted = (socket: Socket, poll: PollData): [boolean, string] => {
