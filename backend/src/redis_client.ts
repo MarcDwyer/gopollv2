@@ -1,10 +1,6 @@
-import { RedisClient } from "redis";
+import { RedisClient, createClient } from "redis";
 import { promisify } from "util";
-import uuid from "uuid";
-
-import { PollData, IncPoll } from "./types/poll_types";
-import { IPSubField } from "./types/ip_field_types";
-import { structPoll } from "./structure_poll";
+import { RedisConfig } from "./main";
 
 export type ClientPromises = {
   getAsync(id: string): Promise<string>;
@@ -22,11 +18,9 @@ const clientPromises = (client: RedisClient): ClientPromises => {
   };
 };
 
-class RedisMethods {
-  private client: RedisClient;
+class RedisDb {
   public promises: ClientPromises;
   constructor(client: RedisClient) {
-    this.client = client;
     this.promises = clientPromises(client);
   }
   async getAndParse(id: string): Promise<any> {
@@ -50,66 +44,14 @@ class RedisMethods {
       console.log(err);
     }
   }
-}
-
-class RedisPolls extends RedisMethods {
-  constructor(client: RedisClient) {
-    super(client);
-  }
-  async createPoll(poll: IncPoll): Promise<PollData | null> {
+  async setData(id: string, data: any) {
     const { setAsync } = this.promises;
     try {
-      const id = uuid();
-      const newpoll: PollData = { ...structPoll(poll), id };
-      await setAsync(id, JSON.stringify(newpoll));
-      return newpoll;
+      await setAsync(id, JSON.stringify(data));
     } catch (err) {
       console.log(err);
-      return null;
-    }
-  }
-  async castVote(poll_id: string, option: string): Promise<PollData> {
-    const { setAsync } = this.promises;
-    try {
-      const poll: PollData = await this.getAndParse(poll_id);
-      if (option in poll.options) {
-        poll.options[option].count += 1;
-      }
-      await setAsync(poll_id, JSON.stringify(poll));
-      return poll;
-    } catch (err) {
-      console.log(err);
-      return null;
     }
   }
 }
 
-class RedisIps extends RedisMethods {
-  constructor(client: RedisClient) {
-    super(client);
-  }
-  async createIpField(poll_id: string) {
-    const { setAsync } = this.promises;
-    await setAsync(poll_id, JSON.stringify({}));
-  }
-  async addIpToField(poll_id: string, client_ip: string) {
-    const { setAsync } = this.promises;
-    const ipField: IPSubField = await this.getAndParse(poll_id);
-    if (!ipField) {
-      console.log("ipfield could not be found");
-      return;
-    }
-    ipField[client_ip] = true;
-    console.log(ipField);
-    await setAsync(poll_id, JSON.stringify(ipField));
-  }
-  async checkIpField(poll_id: string, client_ip: string): Promise<boolean> {
-    //@ts-ignore
-    const ipField: IPSubField = await this.getAndParse(poll_id);
-    if (client_ip in ipField) {
-      return false;
-    }
-    return true;
-  }
-}
-export { RedisPolls, RedisIps };
+export default RedisDb;

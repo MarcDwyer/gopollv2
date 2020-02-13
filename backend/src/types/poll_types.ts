@@ -18,7 +18,7 @@ export type PollData = {
   id: string;
   question: string;
   options: { [key: string]: Option };
-  filterIps: boolean;
+  ipFilter: { [ip: string]: boolean } | null;
 };
 
 export type PollIDPayload = {

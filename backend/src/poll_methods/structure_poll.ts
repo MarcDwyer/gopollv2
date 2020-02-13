@@ -1,10 +1,12 @@
-import { IncPoll, PollData, Option } from "./types/poll_types";
+import { IncPoll, PollData, Option } from "../types/poll_types";
+import uuid from "uuid";
 
-export const structPoll = (poll: IncPoll) => {
+export const structPoll = (poll: IncPoll): PollData => {
   const { options, question, filterIps } = poll;
   return {
+    id: uuid(),
     question,
-    filterIps,
+    ipFilter: filterIps ? {} : null,
     options: structOptions(options)
   };
 };

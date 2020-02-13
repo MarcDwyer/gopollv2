@@ -1,10 +1,9 @@
 import io from "socket.io";
 import redisAdapter from "socket.io-redis";
-import { createClient } from "redis";
-
-import { RedisPolls, RedisIps } from "./redis_client";
 import { setWsHandlers } from "./ws_handler";
 import dotenv from "dotenv";
+import RedisDb from "./redis_client";
+import { createClient } from "redis";
 
 dotenv.config();
 
@@ -17,16 +16,13 @@ export const RedisConfig = {
   password: DBPASS
 };
 
-async function main() {
-  const polls = new RedisPolls(createClient(RedisConfig));
-  await polls.selectDb(0);
-  const ips = new RedisIps(createClient(RedisConfig));
-  await ips.selectDb(1);
+export const redisClient = new RedisDb(createClient(RedisConfig));
 
+async function main() {
   const wss = io(PORT);
   wss.adapter(redisAdapter(RedisConfig));
 
-  setWsHandlers(wss, polls, ips);
+  setWsHandlers(wss);
 }
 
 main();

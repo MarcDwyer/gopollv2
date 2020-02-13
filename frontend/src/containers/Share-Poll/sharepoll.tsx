@@ -29,7 +29,6 @@ const SharePoll = () => {
       setCopied(false);
     }
   }, [poll]);
-
   return createPortal(
     <animated.div style={notifAnim}>
       <Notification>
