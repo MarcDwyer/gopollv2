@@ -1,8 +1,7 @@
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import {
   CREATE_POLL,
   GET_POLL,
-  BERROR,
   VOTE,
   REMOVE_ROOM
 } from "./types/message_cases";
@@ -20,6 +19,3 @@ export const setWsHandlers = (wss: Server) => {
     socket.on(REMOVE_ROOM, () => socket.leaveAll());
   });
 };
-
-export const setErrorMsg = (socket: Socket) => (msg: string) =>
-  socket.emit(BERROR, { error: msg });

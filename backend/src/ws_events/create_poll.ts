@@ -10,11 +10,11 @@ export default async function createPoll(
   const newPoll = structPoll(poll);
   console.log(newPoll);
   await redisClient.setData(newPoll.id, newPoll);
-  deletePoll(newPoll.id);
+  deleteAfterTime(newPoll.id);
   socket.emit(POLL_ID, newPoll.id);
 }
 
-const deletePoll = (poll_id: string, time: number = 60000 * 60 * 6) => {
+const deleteAfterTime = (poll_id: string, time: number = 60000 * 60 * 6) => {
   const timer = setTimeout(() => redisClient.promises.delAsync(poll_id), time);
   return timer;
 };

@@ -1,7 +1,7 @@
 import valid from "uuid-validate";
 import { POLL_DATA } from "../types/message_cases";
 import { redisClient } from "../main";
-import { setErrorMsg } from "../ws_handler";
+import { setErrorMsg } from "./repeated_evts";
 import { PollData } from "../types/poll_types";
 
 const getPoll = async (poll_id: string, socket: SocketIO.Socket) => {

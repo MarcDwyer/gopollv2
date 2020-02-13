@@ -2,7 +2,7 @@ import { VotePayload, PollData } from "../types/poll_types";
 import { POLL_DATA } from "../types/message_cases";
 import { redisClient } from "../main";
 import { Socket } from "socket.io";
-import { setErrorMsg } from "../ws_handler";
+import { setErrorMsg } from "./repeated_evts";
 
 export const castVote = async (
   vote: VotePayload,
@@ -13,13 +13,16 @@ export const castVote = async (
   const sendError = setErrorMsg(socket);
   try {
     const poll: PollData = await redisClient.getAndParse(id);
-    const [didVote, client_ip] = checkIfVoted(socket, poll);
-    console.log(didVote);
-    if (didVote) {
-      sendError("You've already voted");
-      return;
+    if (poll.ipFilter) {
+      const client_ip = socket.handshake.headers["x-real-ip"] || "localhost";
+      const didVote = checkIpField(poll, client_ip);
+      if (didVote) {
+        sendError("You've already voted");
+        return;
+      }
+      poll.ipFilter[client_ip] = true;
     }
-    const upvotedPoll = upvotePoll(poll, option, client_ip);
+    const upvotedPoll = upvotePoll(poll, option);
     await redisClient.setData(upvotedPoll.id, upvotedPoll);
     //TODO: Should make a custom upvote event instead of sending entire poll
     wss.to(id).emit(POLL_DATA, upvotedPoll);
@@ -28,26 +31,12 @@ export const castVote = async (
   }
 };
 
-const upvotePoll = (
-  poll: PollData,
-  option: string,
-  client_ip: string
-): PollData => {
+const upvotePoll = (poll: PollData, option: string): PollData => {
   const copy = { ...poll };
   if (option in copy.options) {
     copy.options[option].count += 1;
   }
-  copy.ipFilter[client_ip] = true;
   return copy;
-};
-const checkIfVoted = (socket: Socket, poll: PollData): [boolean, string] => {
-  let didVote = false;
-  let client_ip = socket.handshake.headers["x-real-ip"] || "localhost";
-  if (poll.ipFilter) {
-    console.log(poll.ipFilter);
-    didVote = checkIpField(poll, client_ip);
-  }
-  return [didVote, client_ip];
 };
 
 const checkIpField = (poll: PollData, client_ip: string) =>
