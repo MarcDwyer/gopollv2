@@ -6,7 +6,9 @@ import { FREMOVE_ROOM } from "../types/message_types";
 
 export type GetState = () => ReduxStore;
 
-export const setPoll = (poll: FPollData) => ({ type: SET_POLL, payload: poll });
+export const setPoll = (poll: FPollData) => {
+  return { type: SET_POLL, payload: poll };
+};
 
 export const removePoll = () => (dispatch: Dispatch, getState: GetState) => {
   const { socket, poll } = getState();

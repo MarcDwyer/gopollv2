@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  InnerCard,
-  PollInput,
-  MyButton,
-  MyHeader
-} from "../../styled-components/styles";
+import { PollInput, MyButton, MyHeader } from "../../styled-components/styles";
+import { Card, InnerCard } from "../../styled-components/card-styles";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../reducers/reducers";

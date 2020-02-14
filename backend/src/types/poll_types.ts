@@ -17,6 +17,7 @@ export type Option = {
 export type PollData = {
   id: string;
   question: string;
+  expiresIn: number;
   options: { [key: string]: Option };
   ipFilter: { [ip: string]: boolean } | null;
 };
@@ -39,4 +40,10 @@ export type TRedisPoll = {
 
 export type CustomError = {
   error: string;
+};
+
+export type FCreatedPoll = {
+  question: string;
+  poll_id: string;
+  expiresin: string;
 };

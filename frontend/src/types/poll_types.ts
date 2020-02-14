@@ -23,3 +23,9 @@ export type FPollIDPayload = {
 export type FErrorMessage = {
   error: string;
 };
+
+export type FCreatedPoll = {
+  question: string;
+  poll_id: string;
+  expiresIn: number;
+};

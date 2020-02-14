@@ -11,14 +11,15 @@ import CreatePoll from "../Create-Poll/create";
 import Nav from "../Nav/nav";
 import SharePoll from "../Share-Poll/sharepoll";
 
-import { FPollData, FErrorMessage } from "../../types/poll_types";
-import { FPOLL_DATA, FPOLL_ID, FBERROR } from "../../types/message_types";
+import { FPollData, FErrorMessage, FCreatedPoll } from "../../types/poll_types";
+import { FPOLL_DATA, FBERROR, FCREATED_POLL } from "../../types/message_types";
 
 import PollViewer from "../Poll-Viewer/poll-viewer";
 
 import { setError } from "../../actions/error_actions";
 
 import "./main.scss";
+import { setLocalPoll } from "../../storage_methods/localstorage";
 
 export const isDev =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development";
@@ -40,8 +41,9 @@ const Main = () => {
   }, []);
 
   const socketHandler = (wss: SocketIOClient.Socket) => {
-    wss.on(FPOLL_ID, (id: any) => {
-      history.push(`/vote/${id}`);
+    wss.on(FCREATED_POLL, (pollData: FCreatedPoll) => {
+      setLocalPoll(pollData);
+      history.push(`/vote/${pollData.poll_id}`);
     });
     wss.on(FPOLL_DATA, (poll: FPollData) => {
       if (!poll || !Object.keys(poll).length) {
