@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router } from "react-router";
 import { applyMiddleware, createStore } from "redux";
-import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
@@ -14,13 +12,9 @@ import "./index.css";
 
 const store = createStore(Reducers, applyMiddleware(thunk));
 
-export const history = createBrowserHistory();
-
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <Main />
-    </Router>
+    <Main />
   </Provider>,
   document.getElementById("root")
 );

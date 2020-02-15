@@ -3,6 +3,8 @@ import io from "socket.io-client";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Router } from "react-router";
+import { createBrowserHistory } from "history";
 
 import { setSocket } from "../../actions/socket_actions";
 import { setPoll } from "../../actions/poll_actions";
@@ -13,20 +15,21 @@ import SharePoll from "../Share-Poll/sharepoll";
 
 import { FPollData, FErrorMessage, FCreatedPoll } from "../../types/poll_types";
 import { FPOLL_DATA, FBERROR, FCREATED_POLL } from "../../types/message_types";
+import { setLocalPoll } from "../../storage_methods/localstorage";
 
 import PollViewer from "../Poll-Viewer/poll-viewer";
 
 import { setError } from "../../actions/error_actions";
 
 import "./main.scss";
-import { setLocalPoll } from "../../storage_methods/localstorage";
 
 export const isDev =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
 const Main = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+
+  const history = createBrowserHistory();
 
   useEffect(() => {
     const url = isDev
@@ -59,14 +62,16 @@ const Main = () => {
 
   return (
     <div className="main">
-      <Nav />
-      <SharePoll />
-      <div className="poll-viewer">
-        <Switch>
-          <Route path={"/:view/:pollID"} component={PollViewer} />
-          <Route path="/" component={CreatePoll} />
-        </Switch>
-      </div>
+      <Router history={history}>
+        <Nav />
+        <SharePoll />
+        <div className="poll-viewer">
+          <Switch>
+            <Route path={"/:view/:pollID"} component={PollViewer} />
+            <Route path="/" component={CreatePoll} />
+          </Switch>
+        </div>
+      </Router>
     </div>
   );
 };
