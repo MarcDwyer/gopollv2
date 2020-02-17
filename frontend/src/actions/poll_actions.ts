@@ -11,7 +11,7 @@ export const setPoll = (poll: FPollData) => {
 };
 
 export const removePoll = () => (dispatch: Dispatch, getState: GetState) => {
-  const { socket, poll } = getState();
+  const { socket } = getState();
   socket?.emit(FREMOVE_ROOM);
   dispatch({
     type: SET_POLL,

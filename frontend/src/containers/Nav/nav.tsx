@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ReduxStore } from "../../reducers/reducers";
 import { removePoll } from "../../actions/poll_actions";
 
-import { MyHeader } from "../../styled-components/styles";
+import { MyHeader } from "../../styled-components/generic-styles";
 import { BorderLink } from "../../styled-components/link-styles";
 
 import "./nav.scss";
@@ -12,8 +12,6 @@ import "./nav.scss";
 const Nav = () => {
   const err = useSelector((state: ReduxStore) => state.error);
   const dispatch = useDispatch();
-  const linkMargin = "auto 10px auto auto";
-
   const myLinks = [
     {
       to: "/yourpolls",
@@ -46,7 +44,7 @@ const Nav = () => {
               borderLeft: i === 0 ? "1px solid black" : ""
             };
             return (
-              <BorderLink key={to} margin={linkMargin} to={to} style={styles}>
+              <BorderLink key={to} to={to} style={styles}>
                 <MyHeader>{header}</MyHeader>
               </BorderLink>
             );

@@ -13,11 +13,8 @@ type PInnerCard = {
 };
 export const InnerCard = styled.div<PInnerCard>`
   padding: 15px 15px;
-  width: 95%;
-  height: 95%;
-  margin: auto;
+  min-width: 350px;
   display: flex;
+  margin: auto;
   flex-direction: column;
-  text-align: center;
-  width: ${p => p.width || ""};
 `;

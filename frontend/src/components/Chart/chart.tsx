@@ -1,6 +1,6 @@
 import React from "react";
 import { FPollData } from "../../types/poll_types";
-import { MyHeader } from "../../styled-components/styles";
+import { MyHeader } from "../../styled-components/generic-styles";
 import {
   BarChart,
   Bar,

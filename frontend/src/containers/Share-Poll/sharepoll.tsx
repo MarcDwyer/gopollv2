@@ -6,7 +6,7 @@ import {
   Notification,
   MyHeader,
   MyButton
-} from "../../styled-components/styles";
+} from "../../styled-components/generic-styles";
 import { isDev } from "../Main/main";
 import { useSpring, animated } from "react-spring";
 
@@ -42,7 +42,7 @@ const SharePoll = () => {
                 <React.Fragment>
                   <MyHeader fontSize="27px">Share your poll!</MyHeader>
                   <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
-                    <MyButton variant="outlined" color="primary">
+                    <MyButton color="primary">
                       {!copied ? "Copy and share!" : "Copied!"}
                     </MyButton>
                   </CopyToClipboard>

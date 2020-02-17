@@ -8,9 +8,9 @@ import {
   Radio,
   RadioGroup
 } from "@material-ui/core";
-import { MyButton } from "../../styled-components/styles";
+import { MyButton } from "../../styled-components/generic-styles";
 
-import { MyHeader } from "../../styled-components/styles";
+import { MyHeader } from "../../styled-components/generic-styles";
 import { FVOTE } from "../../types/message_types";
 
 import "./votepoll.scss";
@@ -69,7 +69,6 @@ const VotePoll = (props: Props) => {
         <MyButton
           style={{ margin: "10px auto auto 10px" }}
           color="primary"
-          variant="outlined"
           onClick={handleSubmit}
         >
           Submit

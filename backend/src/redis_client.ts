@@ -1,6 +1,5 @@
-import { RedisClient, createClient } from "redis";
+import { RedisClient } from "redis";
 import { promisify } from "util";
-import { RedisConfig } from "./main";
 
 export type ClientPromises = {
   getAsync(id: string): Promise<string>;
@@ -38,19 +37,11 @@ class RedisDb {
   }
   async delField(id: string) {
     const { delAsync } = this.promises;
-    try {
-      return await delAsync(id);
-    } catch (err) {
-      console.log(err);
-    }
+    return await delAsync(id);
   }
   async setData(id: string, data: any) {
     const { setAsync } = this.promises;
-    try {
-      await setAsync(id, JSON.stringify(data));
-    } catch (err) {
-      console.log(err);
-    }
+    await setAsync(id, JSON.stringify(data));
   }
 }
 

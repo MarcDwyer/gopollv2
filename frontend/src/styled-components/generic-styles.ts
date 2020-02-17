@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TextField, Button } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { cardYellow } from "./card-styles";
 
 export const PollInput = styled(TextField)`
@@ -10,16 +10,24 @@ type PMyButton = {
   width?: string;
   margin?: string;
 };
-export const MyButton = styled(Button)<PMyButton>`
+export const MyButton = styled.button<PMyButton>`
+  background-color: rgba(186, 218, 85, 1);
   width: ${p => p.width || ""};
   margin: ${p => p.margin || ""};
+  border: none;
+  padding: 15px 15px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
 `;
 
 type PMyHeader = {
   fontSize?: string;
+  margin?: string;
   fontWeight?: string;
 };
 export const MyHeader = styled.span<PMyHeader>`
+  margin: ${p => p.margin || ""};
   font-size: ${p => p.fontSize || "27px"};
   font-weight: ${p => p.fontWeight || ""};
 `;

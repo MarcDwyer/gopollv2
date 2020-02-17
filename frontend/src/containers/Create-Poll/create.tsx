@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { PollInput, MyButton, MyHeader } from "../../styled-components/styles";
+import React, { useState, useEffect, FormEvent } from "react";
+import { MyButton, MyHeader } from "../../styled-components/generic-styles";
 import { Card, InnerCard } from "../../styled-components/card-styles";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../reducers/reducers";
 
+import { CreateInput, CheckedInput } from "../../styled-components/inputs";
 import { FCREATE_POLL } from "../../types/message_types";
 
 import { FPoll } from "../../types/poll_types";
@@ -28,6 +29,15 @@ const CreatePoll = () => {
       copy[index] = value;
       return copy;
     });
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const pollData: FPoll = {
+      question,
+      options,
+      filterIps
+    };
+    socket?.emit(FCREATE_POLL, pollData);
+  };
 
   useEffect(() => {
     setOptions(getOptions(3));
@@ -40,25 +50,15 @@ const CreatePoll = () => {
       }
     }
   }, [options]);
+
   return (
     <Card>
-      <InnerCard width="550px">
-        <MyHeader>Create a poll!</MyHeader>
-        <form
-          style={{ display: "flex", flexDirection: "column" }}
-          onSubmit={e => {
-            e.preventDefault();
-            const pollData: FPoll = {
-              question,
-              options,
-              filterIps
-            };
-            socket?.emit(FCREATE_POLL, pollData);
-          }}
-        >
+      <InnerCard>
+        <MyHeader margin="auto">Create a poll!</MyHeader>
+        <form onSubmit={handleSubmit}>
           <div className="question">
-            <PollInput
-              label="Question"
+            <label>Question</label>
+            <CreateInput
               required
               name="question"
               autoComplete="off"
@@ -72,30 +72,20 @@ const CreatePoll = () => {
               //@ts-ignore
               if (i < 2) addFields["required"] = true;
               return (
-                <PollInput
-                  key={i}
-                  autoComplete="off"
-                  label={`Option ${i + 1}`}
-                  {...addFields}
-                  onChange={e => handleOptions(i, e.target.value)}
-                  variant="outlined"
-                  value={option}
-                />
+                <div className="option" key={i}>
+                  <label>{`Option #${i + 1}`}</label>
+                  <CreateInput
+                    autoComplete="off"
+                    {...addFields}
+                    onChange={e => handleOptions(i, e.target.value)}
+                    value={option}
+                  />
+                </div>
               );
             })}
-            <FormControlLabel
-              label="Check duplicate Ips"
-              control={
-                <Checkbox
-                  color="primary"
-                  onChange={() => setFilter(!filterIps)}
-                  checked={filterIps}
-                />
-              }
-            />
+            <CheckedInput type="checkbox" checked={filterIps} />
             <MyButton
               color="primary"
-              variant="outlined"
               className="create-btn"
               type="submit"
               width="115px"

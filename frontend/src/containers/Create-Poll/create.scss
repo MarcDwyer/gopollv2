@@ -1,13 +1,22 @@
 .create-header {
   font-size: 27px;
 }
+form {
+  display: flex;
+  flex-direction: column;
 
+  label {
+    font-size: 20px;
+  }
+}
 .options {
   display: flex;
   flex-direction: column;
-  width: 90%;
-  margin: auto;
 
+  .option {
+    display: flex;
+    flex-direction: column;
+  }
   .create-btn {
     margin: auto 10px auto auto;
   }
@@ -15,9 +24,5 @@
 
 .question {
   display: flex;
-  width: 95%;
-  margin: auto auto 20px auto;
-  div {
-    width: 100%;
-  }
+  flex-direction: column;
 }

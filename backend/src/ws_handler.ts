@@ -14,7 +14,7 @@ export const setWsHandlers = (wss: Server) => {
   wss.on("connection", socket => {
     socket.on(CREATE_POLL, (poll: IncPoll) => createPoll(poll, socket));
     socket.on(GET_POLL, async (id: string) => getPoll(id, socket));
-
+  
     socket.on(VOTE, async (vote: VotePayload) => castVote(vote, socket, wss));
     socket.on(REMOVE_ROOM, () => socket.leaveAll());
   });

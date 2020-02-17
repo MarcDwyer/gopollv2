@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { ReduxStore } from "../../reducers/reducers";
 import { FGET_POLL } from "../../types/message_types";
 import { Card, InnerCard } from "../../styled-components/card-styles";
-import { MyHeader } from "../../styled-components/styles";
+import { MyHeader } from "../../styled-components/generic-styles";
 
 import VotePoll from "../../components/VotePoll/vote_poll";
 import Chart from "../../components/Chart/chart";

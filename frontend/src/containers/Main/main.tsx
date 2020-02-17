@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import io from "socket.io-client";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { Router } from "react-router";
 import { createBrowserHistory } from "history";
 

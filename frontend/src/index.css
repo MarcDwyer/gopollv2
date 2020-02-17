@@ -5,12 +5,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+input {
+  font-family: Baloo Bhai, cursive;
+  -webkit-font-smoothing: antialiased;
 }
-
 a {
   text-decoration: none;
   color: inherit;
