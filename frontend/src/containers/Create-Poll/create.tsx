@@ -1,7 +1,6 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import { MyButton, MyHeader } from "../../styled-components/generic-styles";
 import { Card, InnerCard } from "../../styled-components/card-styles";
-import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../reducers/reducers";
 
@@ -40,7 +39,7 @@ const CreatePoll = () => {
   };
 
   useEffect(() => {
-    setOptions(getOptions(3));
+    setOptions(getOptions(2));
   }, []);
   useEffect(() => {
     const len = options.length;
@@ -57,10 +56,11 @@ const CreatePoll = () => {
         <MyHeader margin="auto">Create a poll!</MyHeader>
         <form onSubmit={handleSubmit}>
           <div className="question">
-            <label>Question</label>
+            <label className="question-label">Question</label>
             <CreateInput
               required
               name="question"
+              placeholder="question goes here"
               autoComplete="off"
               value={question}
               onChange={e => setQuestion(e.target.value)}
@@ -73,7 +73,7 @@ const CreatePoll = () => {
               if (i < 2) addFields["required"] = true;
               return (
                 <div className="option" key={i}>
-                  <label>{`Option #${i + 1}`}</label>
+                  <label className="option-label">{`Option #${i + 1}`}</label>
                   <CreateInput
                     autoComplete="off"
                     {...addFields}
@@ -83,7 +83,14 @@ const CreatePoll = () => {
                 </div>
               );
             })}
-            <CheckedInput type="checkbox" checked={filterIps} />
+            <div className="checkbox-div">
+              <CheckedInput
+                onChange={() => setFilter(!filterIps)}
+                type="checkbox"
+                checked={filterIps}
+              />
+              <label>Check for duplicate Ips?</label>
+            </div>
             <MyButton
               color="primary"
               className="create-btn"

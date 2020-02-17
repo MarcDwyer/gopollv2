@@ -5,8 +5,19 @@ form {
   display: flex;
   flex-direction: column;
 
-  label {
+  .option-label,
+  .question-label {
     font-size: 20px;
+  }
+
+  .checkbox-div {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    label {
+      margin-left: 5px;
+    }
   }
 }
 .options {

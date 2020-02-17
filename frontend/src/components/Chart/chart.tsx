@@ -28,7 +28,7 @@ const Chart = (props: Props) => {
 
   return (
     <React.Fragment>
-      <MyHeader>{poll.question}</MyHeader>
+      <MyHeader margin="auto auto 10px auto">{poll.question}</MyHeader>
       <BarChart
         width={500}
         height={300}

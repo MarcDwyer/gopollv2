@@ -14,7 +14,7 @@ import SharePoll from "../Share-Poll/sharepoll";
 
 import { FPollData, FErrorMessage, FCreatedPoll } from "../../types/poll_types";
 import { FPOLL_DATA, FBERROR, FCREATED_POLL } from "../../types/message_types";
-import { setLocalPoll } from "../../storage_methods/localstorage";
+// import { setLocalPoll } from "../../storage_methods/localstorage";
 
 import PollViewer from "../Poll-Viewer/poll-viewer";
 
@@ -44,7 +44,6 @@ const Main = () => {
 
   const socketHandler = (wss: SocketIOClient.Socket) => {
     wss.on(FCREATED_POLL, (pollData: FCreatedPoll) => {
-      setLocalPoll(pollData);
       history.push(`/vote/${pollData.poll_id}`);
     });
     wss.on(FPOLL_DATA, (poll: FPollData) => {

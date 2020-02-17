@@ -11,4 +11,8 @@ export const CreateInput = styled.input`
   font-size: 16px;
 `;
 
-export const CheckedInput = styled.input``;
+export const CheckedInput = styled.input`
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+`;

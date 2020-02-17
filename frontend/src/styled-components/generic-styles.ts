@@ -8,10 +8,11 @@ export const PollInput = styled(TextField)`
 
 type PMyButton = {
   width?: string;
+  bgColor?: string;
   margin?: string;
 };
 export const MyButton = styled.button<PMyButton>`
-  background-color: rgba(186, 218, 85, 1);
+  background-color: ${p => p.bgColor || "#BADA55"};
   width: ${p => p.width || ""};
   margin: ${p => p.margin || ""};
   border: none;
