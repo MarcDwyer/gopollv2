@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import { TextField } from "@material-ui/core";
 import { cardYellow } from "./card-styles";
-
-export const PollInput = styled(TextField)`
-  margin: 10px 0 10px 0 !important;
-`;
 
 type PMyButton = {
   width?: string;

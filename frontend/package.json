@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
@@ -40,8 +39,7 @@
     "source-map-explorer": "^2.2.2",
     "styled-components": "^5.0.0",
     "typescript": "^3.7.5",
-    "uuid-validate": "0.0.3",
-    "yup": "^0.28.1"
+    "uuid-validate": "0.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
