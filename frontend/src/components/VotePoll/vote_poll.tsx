@@ -50,7 +50,8 @@ const VotePoll = (props: Props) => {
         <MyButton
           style={{ margin: "10px auto auto 10px" }}
           onClick={handleSubmit}
-          bgColor={!selected ? "#C94747" : undefined}
+          color="#eee"
+          bgColor={!selected ? "#C94747" : "#359BFF"}
         >
           {!selected ? "Choose!" : "Submit"}
         </MyButton>

@@ -92,9 +92,10 @@ const CreatePoll = () => {
               <label>Check for duplicate Ips?</label>
             </div>
             <MyButton
-              color="primary"
               className="create-btn"
               type="submit"
+              bgColor="#359BFF"
+              color="#eee"
               width="115px"
             >
               Submit

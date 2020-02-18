@@ -5,6 +5,7 @@ type PMyButton = {
   width?: string;
   bgColor?: string;
   margin?: string;
+  color?: string;
 };
 export const MyButton = styled.button<PMyButton>`
   background-color: ${p => p.bgColor || "#BADA55"};
@@ -15,6 +16,7 @@ export const MyButton = styled.button<PMyButton>`
   cursor: pointer;
   font-family: inherit;
   font-size: 16px;
+  color: ${p => p.color || "inherit"};
 `;
 
 type PMyHeader = {
