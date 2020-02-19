@@ -8,7 +8,6 @@ import { CreateInput, CheckedInput } from "../../styled-components/inputs";
 import { FCREATE_POLL } from "../../types/message_types";
 
 import CreateReducer, {
-  initState,
   ADD_OPTION,
   QUESTION,
   OPTIONS,
@@ -17,8 +16,18 @@ import CreateReducer, {
 
 import "./create.scss";
 
+const getOptions = (count: number) =>
+  Array(count)
+    .join(".")
+    .split(".");
+
 const CreatePoll = () => {
-  const [form, dispatchForm] = useReducer(CreateReducer, initState);
+  const [form, dispatchForm] = useReducer(CreateReducer, {
+    question: "",
+    filterIps: false,
+    options: getOptions(2)
+  });
+
   const socket = useSelector((state: ReduxStore) => state.socket);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

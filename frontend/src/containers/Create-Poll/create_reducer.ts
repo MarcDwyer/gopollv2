@@ -1,28 +1,17 @@
 import { Action } from "../../reducers/reducers";
 
-const getOptions = (count: number) =>
-  Array(count)
-    .join(".")
-    .split(".");
-type PollOptions = {
+export type PollOptions = {
   question: string;
   filterIps: boolean;
   options: string[];
 };
-export const initState: PollOptions = {
-  question: "",
-  filterIps: false,
-  options: getOptions(2)
-};
 export const QUESTION = Symbol(),
   FILTERIPS = Symbol(),
   OPTIONS = Symbol(),
-  ADD_OPTION = Symbol();
+  ADD_OPTION = Symbol(),
+  RESET_FORM = Symbol();
 
-const CreateReducer = (
-  state: PollOptions = initState,
-  { type, payload }: Action
-) => {
+const CreateReducer = (state: PollOptions, { type, payload }: Action) => {
   const copy = { ...state };
   switch (type) {
     case QUESTION:
