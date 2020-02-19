@@ -27,7 +27,6 @@ export const isDev =
 
 const Main = () => {
   const dispatch = useDispatch();
-
   const history = createBrowserHistory();
 
   useEffect(() => {

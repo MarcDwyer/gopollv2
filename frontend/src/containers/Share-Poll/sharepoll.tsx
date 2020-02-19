@@ -25,7 +25,7 @@ const SharePoll = () => {
   });
 
   useEffect(() => {
-    if (!poll) {
+    if (!poll && copied) {
       setCopied(false);
     }
   }, [poll]);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useEffect, FormEvent, useReducer } from "react";
 import { MyButton, MyHeader } from "../../styled-components/generic-styles";
 import { Card, InnerCard } from "../../styled-components/card-styles";
 import { useSelector } from "react-redux";
@@ -7,48 +7,33 @@ import { ReduxStore } from "../../reducers/reducers";
 import { CreateInput, CheckedInput } from "../../styled-components/inputs";
 import { FCREATE_POLL } from "../../types/message_types";
 
-import { FPoll } from "../../types/poll_types";
+import CreateReducer, {
+  initState,
+  ADD_OPTION,
+  QUESTION,
+  OPTIONS,
+  FILTERIPS
+} from "./create_reducer";
 
 import "./create.scss";
 
 const CreatePoll = () => {
-  const [question, setQuestion] = useState<string>("");
-  const [options, setOptions] = useState<string[]>([]);
-  const [filterIps, setFilter] = useState<boolean>(false);
+  const [form, dispatchForm] = useReducer(CreateReducer, initState);
   const socket = useSelector((state: ReduxStore) => state.socket);
 
-  const getOptions = (count: number) =>
-    Array(count)
-      .join(".")
-      .split(".");
-
-  const handleOptions = (index: number, value: string) =>
-    setOptions(prev => {
-      const copy = [...prev];
-      copy[index] = value;
-      return copy;
-    });
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const pollData: FPoll = {
-      question,
-      options,
-      filterIps
-    };
-    socket?.emit(FCREATE_POLL, pollData);
+    console.log(form);
+    socket?.emit(FCREATE_POLL, form);
   };
 
   useEffect(() => {
-    setOptions(getOptions(2));
-  }, []);
-  useEffect(() => {
+    const { options } = form;
     const len = options.length;
-    if (len) {
-      if (options.length <= 9 && options[len - 1].length > 1) {
-        setOptions([...options, ""]);
-      }
+    if (options.length <= 9 && options[len - 1].length > 1) {
+      dispatchForm({ type: ADD_OPTION, payload: null });
     }
-  }, [options]);
+  }, [form]);
 
   return (
     <Card>
@@ -62,22 +47,29 @@ const CreatePoll = () => {
               name="question"
               placeholder="question goes here"
               autoComplete="off"
-              value={question}
-              onChange={e => setQuestion(e.target.value)}
+              value={form.question}
+              onChange={e =>
+                dispatchForm({ type: QUESTION, payload: e.target.value })
+              }
             />
           </div>
           <div className="options">
-            {options.map((option, i) => {
-              const addFields = {};
-              //@ts-ignore
-              if (i < 2) addFields["required"] = true;
+            {form.options.map((option, i) => {
+              const addFields = {
+                required: i < 2 ? true : false
+              };
               return (
                 <div className="option" key={i}>
                   <label className="option-label">{`Option #${i + 1}`}</label>
                   <CreateInput
                     autoComplete="off"
                     {...addFields}
-                    onChange={e => handleOptions(i, e.target.value)}
+                    onChange={e =>
+                      dispatchForm({
+                        type: OPTIONS,
+                        payload: { index: i, value: e.target.value }
+                      })
+                    }
                     value={option}
                   />
                 </div>
@@ -85,9 +77,11 @@ const CreatePoll = () => {
             })}
             <div className="checkbox-div">
               <CheckedInput
-                onChange={() => setFilter(!filterIps)}
+                onChange={() =>
+                  dispatchForm({ type: FILTERIPS, payload: null })
+                }
                 type="checkbox"
-                checked={filterIps}
+                checked={form.filterIps}
               />
               <label>Check for duplicate Ips?</label>
             </div>

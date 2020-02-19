@@ -47,7 +47,7 @@ const PollViewer = () => {
   };
   return (
     <Card>
-      <InnerCard width="550px">{renderView()}</InnerCard>
+      <InnerCard>{renderView()}</InnerCard>
     </Card>
   );
 };
