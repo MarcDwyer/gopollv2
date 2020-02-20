@@ -14,12 +14,9 @@ import CreateReducer, {
   FILTERIPS
 } from "./create_reducer";
 
-import "./create.scss";
+import { getOptions } from "../../utils";
 
-const getOptions = (count: number) =>
-  Array(count)
-    .join(".")
-    .split(".");
+import "./create.scss";
 
 const CreatePoll = () => {
   const [form, dispatchForm] = useReducer(CreateReducer, {
@@ -35,7 +32,6 @@ const CreatePoll = () => {
     console.log(form);
     socket?.emit(FCREATE_POLL, form);
   };
-
   useEffect(() => {
     const { options } = form;
     const len = options.length;
