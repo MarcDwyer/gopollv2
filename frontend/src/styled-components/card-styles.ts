@@ -6,6 +6,10 @@ export const Card = styled.div`
   background-color: ${cardYellow};
   display: flex;
   margin: auto;
+
+  @media (max-width: 850px) {
+    width: 98%;
+  }
 `;
 
 type PInnerCard = {
@@ -17,4 +21,9 @@ export const InnerCard = styled.div<PInnerCard>`
   display: flex;
   margin: auto;
   flex-direction: column;
+
+  @media (max-width: 850px) {
+    min-width: 0;
+    width: 100%;
+  }
 `;

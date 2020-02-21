@@ -5,6 +5,10 @@
 
   .links {
     display: flex;
+
+    @media (max-width: 850px) {
+      display: none;
+    }
   }
   .inner-nav {
     display: flex;

@@ -1,0 +1,12 @@
+.the-chart {
+  @media (max-width: 850px) {
+    width: 100% !important;
+    height: 100%;
+    display: flex;
+    margin: auto;
+
+    & * {
+      margin: auto;
+    }
+  }
+}

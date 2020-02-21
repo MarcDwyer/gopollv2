@@ -29,6 +29,9 @@ const SharePoll = () => {
       setCopied(false);
     }
   }, [poll]);
+  if (window.innerWidth <= 850) {
+    return null;
+  }
   return createPortal(
     <animated.div style={notifAnim}>
       <Notification>

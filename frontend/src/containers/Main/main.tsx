@@ -58,7 +58,7 @@ const Main = () => {
   };
 
   return (
-    <div className="main">
+    <main>
       <Router history={history}>
         <Nav />
         <SharePoll />
@@ -69,7 +69,7 @@ const Main = () => {
           </Switch>
         </div>
       </Router>
-    </div>
+    </main>
   );
 };
 

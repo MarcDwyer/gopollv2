@@ -11,6 +11,8 @@ import {
   Legend
 } from "recharts";
 
+import "./chart.scss";
+
 interface Props {
   poll: FPollData;
 }
@@ -30,6 +32,7 @@ const Chart = (props: Props) => {
     <React.Fragment>
       <MyHeader margin="auto auto 10px auto">{poll.question}</MyHeader>
       <BarChart
+        className="the-chart"
         width={500}
         height={300}
         data={chartData}

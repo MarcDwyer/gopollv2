@@ -24,12 +24,8 @@ class RedisDb {
   }
   async getAndParse(id: string): Promise<any> {
     const { getAsync } = this.promises;
-    try {
-      const str = await getAsync(id);
-      return JSON.parse(str);
-    } catch (err) {
-      return null;
-    }
+    const str = await getAsync(id);
+    return JSON.parse(str);
   }
   async selectDb(index: number) {
     await this.promises.dbAsync(index);

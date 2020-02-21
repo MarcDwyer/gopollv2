@@ -8,7 +8,7 @@ import Reducers from "./reducers/reducers";
 
 import Main from "./containers/Main/main";
 
-import "./index.css";
+import "./index.scss";
 
 const store = createStore(Reducers, applyMiddleware(thunk));
 
